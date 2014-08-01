@@ -13,11 +13,11 @@ Here is the way:
 
 ----
 
-## Get a clean raspberry pi installation,
+## 1. Get a clean raspberry pi installation,
 
-## Attach your external USB HDD,
+## 2. Attach your external USB HDD,
 
-## Create partitions,
+## 3. Create partitions,
 
 * you should replace **X** with your HDD drive\'s letter (eg. /dev/sd**a**, /dev/sd**b**, ...)
 
@@ -26,7 +26,7 @@ $ sudo fdisk /dev/sdX
 {% endhighlight %}
 
 
-#### Create a swap partition (in my case, its size is 1GB)
+### A. Create a swap partition (in my case, its size is 1GB)
 
 ~~~~
 Command (m for help): n
@@ -47,7 +47,7 @@ Hex code (type L to list codes): 82
 Changed system type of partition 1 to 82 (Linux swap / Solaris)
 ~~~~
 
-#### Create a root partition
+### B. Create a root partition
 
 ~~~~
 Command (m for help): n
@@ -62,7 +62,7 @@ Last sector, +sectors or +size{K,M,G} (2099200-625142446, default 625142446):
 Using default value 625142446
 ~~~~
 
-#### And save these to the partition table
+### C. And save these to the partition table
 
 ~~~~
 Command (m for help): w
@@ -78,7 +78,7 @@ Syncing disks.
 
 Now the swap partition is **/dev/sdX1**, and the root partition is **/dev/sdX2**.
 
-## Edit /etc/fstab file,
+## 4. Edit /etc/fstab file,
 
 {% highlight bash %}
 $ sudo vi /etc/fstab
@@ -101,7 +101,7 @@ proc            /proc    proc    defaults          0    0
 /dev/sdX2       /        ext4    defaults,noatime  0    1
 ~~~~
 
-## Format partitions and copy contents to the HDD from SD card,
+## 5. Format partitions and copy contents to the HDD from SD card,
 
 {% highlight bash %}
 # (format partitions)
@@ -118,7 +118,7 @@ $ sudo e2fsck -f /dev/sdX2
 $ sudo resize2fs /dev/sdX2
 {% endhighlight %}
 
-## Set it up,
+## 6. Set it up,
 
 {% highlight bash %}
 # (backup and edit /boot/cmdline.txt)
@@ -142,7 +142,7 @@ dwc_otg.lpm_enable=0 console=ttyAMA0,115200 console=tty1 root=/dev/sdX2 rootfsty
 
 * __bootdelay__ and __rootdelay__ is important here. Without them, it was not bootable with horrible error messages for me.
 
-## ...And reboot!
+## 7. ...and reboot!
 
 {% highlight bash %}
 $ sudo rm /etc/rc2.d/S02dphys-swapfile

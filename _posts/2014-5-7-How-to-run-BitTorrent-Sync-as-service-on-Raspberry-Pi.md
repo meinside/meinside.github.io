@@ -9,7 +9,7 @@ Thanks to that, it can be your personal 24/7 working cloud storage with BitTorre
 
 ----
 
-## Download the binary of BitTorrent Sync
+## 1. Download the binary of BitTorrent Sync
 
 Download **btsync_arm.tar.gz** from [here](http://www.bittorrent.com/sync/downloads/complete/os/arm) and extract **btsync** from it.
 
@@ -17,7 +17,7 @@ Download **btsync_arm.tar.gz** from [here](http://www.bittorrent.com/sync/downlo
 $ tar -xzvf btsync_arm.tar.gz
 {% endhighlight %}
 
-## Create a config file
+## 2. Create a config file
 
 Create a sample config file,
 
@@ -97,60 +97,17 @@ and edit configurations as you need: **device\_name**, **storage\_path**, **logi
 }
 {% endhighlight %}
 
-## Register BitTorrent Sync as a service
+## 3. Register BitTorrent Sync as a service
 
-### Create an init.d script
+### A. Create an init.d script
 
 Create a file with following content:
 
-{% highlight bash %}
-#!/bin/sh
-### BEGIN INIT INFO
-# Provides:          btsync-service
-# Required-Start:    networking
-# Required-Stop:     networking
-# Default-Start:     2 3 4 5
-# Default-Stop:      0 1 6
-# Short-Description: BTSync init.d script for Raspberry Pi
-# Description:       
-# 
-#  BTSync init.d script for Raspberry Pi
-#  * referenced: http://adammatthews.co.uk/2013/05/install-bittorrent-sync-on-debian-raspbian/
-#  * download: http://btsync.s3-website-us-east-1.amazonaws.com/btsync_arm.tar.gz
-#  * sample config file can be genarated with: $BTSYNC_BIN --dump-sample-config > $BTSYNC_CONFIG
-# 
-#  last update: 2013.12.15.
-# 
-#  meinside@gmail.com
-#                    
-### END INIT INFO
+{% gist 7825826 %}
 
-# change following paths
-BTSYNC_DIR=/directory/where/btsync_bin_exists
-BTSYNC=btsync
-BTSYNC_BIN=$BTSYNC_DIR/$BTSYNC
-BTSYNC_CONFIG=/filepath/of/btsync_config_file
+or download from [here](https://gist.githubusercontent.com/meinside/7825826/raw/b68d29d4faefd1dd212565d4d92596684621b489/btsync-service).
 
-# start/stop btsync
-case "$1" in
-	start)
-		$BTSYNC_BIN --config $BTSYNC_CONFIG
-		;;
-	stop)
-		pkill $BTSYNC
-		;;
-	*)
-		echo "Usage: /etc/init.d/btsync-service {start|stop}"
-		exit 1
-		;;
-esac
-
-exit 0
-{% endhighlight %}
-
-or download from [here](https://gist.github.com/meinside/7825826).
-
-### Edit the init.d script
+### B. Edit the init.d script
 
 {% highlight bash %}
 $ vi btsync-service
@@ -158,7 +115,7 @@ $ vi btsync-service
 
 Then replace **BTSYNC\_DIR** and **BTSYNC\_CONFIG** with the locations of yours.
 
-### Register it as service
+### C. Register it as service
 
 {% highlight bash %}
 $ sudo cp btsync-service /etc/init.d/
@@ -168,7 +125,7 @@ $ sudo chmod +x /etc/init.d/btsync-service
 $ sudo update-rc.d btsync-service defaults
 {% endhighlight %}
 
-### Run BitTorrent Sync
+### D. Run BitTorrent Sync
 
 {% highlight bash %}
 # start,
@@ -185,9 +142,9 @@ While BitTorrent Sync service is running, you can connect to the web UI through:
 with the username(**login**) and password you set in the config file.
 
 
-## Trouble Shooting
+## 4. Trouble Shooting
 
-### It doesn\'t work!
+### X. It doesn\'t work!
 
 If anything goes wrong or doesn\'t work as you expected, try executing the binary directly:
 
@@ -197,7 +154,7 @@ $ btsync --config /filepath/of/btsync.conf
 
 then you\'ll see the reason in the error message.
 
-### It crashes my Raspberry Pi!
+### X. It crashes my Raspberry Pi!
 
 If you see `smsc95xx 1-1.1:1.0: eth0: kevent 2 may have been dropped` in your kernel logs, or your Raspberry Pi stops working on heavy traffic, try these:
 
