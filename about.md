@@ -3,12 +3,10 @@ layout: page
 title: About
 ---
 
-Some information about you!
+Love to play with newly released gadgets and technologies.
 
-### More Information
+### More about me?
 
-A place to include any other types of information that you'd like to include about yourself. 
+* visit my [homepage](http://meinside.pe.kr)
+* or links at the bottom.
 
-### Contact me
-
-[email@domain.com](mailto:email@domain.com)
