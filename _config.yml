@@ -45,6 +45,9 @@ url: "http://blog.meinside.pe.kr"
 # then add in the baseurl here, like this: "/repository-name"
 baseurl: ""
 
+# pagination
+paginate: 3
+
 #
 # !! You don't need to change any of the configuration flags below !!
 #

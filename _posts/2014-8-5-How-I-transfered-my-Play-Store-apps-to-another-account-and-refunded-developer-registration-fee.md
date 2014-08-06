@@ -1,6 +1,14 @@
 ---
 layout: post
 title: How I transfered my Play Store apps to another account and refunded developer registration fee
+categories:
+- how-to
+- android
+tags:
+- android
+- play store
+- transfer
+published: true
 ---
 
 Yesterday I moved all of my Play Store apps to a new account due to some issues on my Google Wallet.

@@ -1,6 +1,13 @@
 ---
 layout: post
 title: How to run BitTorrent Sync as service on Raspberry Pi
+categories:
+- how-to
+- raspberry pi
+tags:
+- raspberry pi
+- bittorrent sync
+published: true
 ---
 
 As you may know, Raspberry Pi is quite good at long-running services and applications for its low power consumption.

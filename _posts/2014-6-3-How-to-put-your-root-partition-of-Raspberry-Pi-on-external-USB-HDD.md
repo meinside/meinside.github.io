@@ -1,6 +1,12 @@
 ---
 layout: post
 title: How to put your root partition of Raspberry Pi on external USB HDD
+categories:
+- how-to
+- raspberry pi
+tags:
+- raspberry pi
+published: true
 ---
 
 SD cards have limited read/write cycles, so after using them with Raspberry Pi for some time, they often get broken.
