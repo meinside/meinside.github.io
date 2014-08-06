@@ -4,10 +4,6 @@ title: How I transfered my Play Store apps to another account and refunded devel
 categories:
 - how-to
 - android
-tags:
-- android
-- play store
-- transfer
 published: true
 ---
 
