@@ -25,8 +25,9 @@ footer-links:
   instagram: 
   linkedin: meinside
   pinterest: 
-  rss: # just type anything here for a working RSS icon, make sure you set the "url" above!
+  rss: meinside # just type anything here for a working RSS icon, make sure you set the "url" above!
   twitter: thespeedofpain
+  stackoverflow: # your stackoverflow profile, e.g. "users/50476/bart-kiers"
 
 # Your disqus shortname, entering this will enable commenting on posts
 disqus: meinside
