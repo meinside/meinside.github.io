@@ -1,9 +1,9 @@
 ---
 layout: post
 title: How to run BitTorrent Sync as service on Raspberry Pi
-categories:
-- how-to
-- raspberry-pi
+tags:
+- raspberry pi
+- linux
 published: true
 ---
 

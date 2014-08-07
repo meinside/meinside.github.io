@@ -1,9 +1,8 @@
 ---
 layout: post
 title: How to put your root partition of Raspberry Pi on external USB HDD
-categories:
-- how-to
-- raspberry-pi
+tags:
+- raspberry pi
 published: true
 ---
 

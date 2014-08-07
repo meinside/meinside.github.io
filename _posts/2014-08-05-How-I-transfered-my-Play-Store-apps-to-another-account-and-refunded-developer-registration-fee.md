@@ -1,9 +1,9 @@
 ---
 layout: post
 title: How I transfered my Play Store apps to another account and refunded developer registration fee
-categories:
-- how-to
+tags:
 - android
+- google
 published: true
 ---
 
