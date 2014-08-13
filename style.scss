@@ -268,13 +268,13 @@ nav {
   }
 }
 
-// for pagination
+// meinside - for pagination
 .pagination {
   margin: 10px;
   text-align: center;
 }
 
-// for tag cloud and archives
+// meinside - for tag cloud and archives
 .tag-cloud {
   list-style: none;
   padding: 0;
@@ -297,6 +297,31 @@ nav {
 }
 .post-tags {
   text-align: right;
+}
+
+// meinside - header background image
+.wrapper-masthead {
+  background: url('/images/layout/header.jpg') no-repeat center center fixed;
+  background-size: cover;
+
+  .masthead {
+    padding-left: 10px;
+    padding-right: 10px;
+
+    border-bottom: none;
+
+    .site-name {
+      color: $white;
+    }
+
+    .site-description {
+      color: $lightGray;
+    }
+
+    nav > a {
+      color: $lightGray;
+    }
+  }
 }
 
 .wrapper-footer {
