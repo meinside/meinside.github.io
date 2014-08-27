@@ -63,6 +63,8 @@ permalink: /tags/
 
 Now this page is accessible through url: [http://to.your.jekyll/tags/](/tags/).
 
+----
+
 ## 2. Display tags in your posts
 
 Create an include file for embedding in the posts:
@@ -118,6 +120,8 @@ layout: default
 {% endraw %}
 {% endhighlight %}
 
+----
+
 ## 3. Edit the styles.css file
 
 {% highlight bash %}
@@ -153,6 +157,8 @@ Add following:
 }
 {% endhighlight %}
 
+----
+
 ## 4. Add tags to your posts
 
 Add tags in the [front matter](http://jekyllrb.com/docs/frontmatter/) of your posts.
@@ -173,6 +179,8 @@ published: true
 This is a post for an example.
 {% endraw %}
 {% endhighlight %}
+
+----
 
 ## All done!
 

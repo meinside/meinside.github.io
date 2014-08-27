@@ -21,6 +21,8 @@ Download **btsync_arm.tar.gz** from [here](http://www.bittorrent.com/sync/downlo
 $ tar -xzvf btsync_arm.tar.gz
 {% endhighlight %}
 
+----
+
 ## 2. Create a config file
 
 Create a sample config file,
@@ -101,6 +103,8 @@ and edit configurations as you need: **device\_name**, **storage\_path**, **logi
 }
 {% endhighlight %}
 
+----
+
 ## 3. Register BitTorrent Sync as a service
 
 ### A. Create an init.d script
@@ -145,6 +149,7 @@ While BitTorrent Sync service is running, you can connect to the web UI through:
 
 with the username(**login**) and password you set in the config file.
 
+----
 
 ## 4. Trouble Shooting
 

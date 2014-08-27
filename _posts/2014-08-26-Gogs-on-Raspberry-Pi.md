@@ -55,6 +55,8 @@ $ sudo apt-get install mysql-server
 $ sudo apt-get install postgresql
 {% endhighlight %}
 
+----
+
 ## 1. Checkout and build Gogs source code
 
 Gogs has no pre-built binaries for Raspberry Pi yet, so there's only one choice: [Install From Source Code](http://gogs.io/docs/installation/install_from_source.html).
@@ -86,6 +88,8 @@ $ go build -tags sqlite
 Gogs is nearly ready to run!
 
 But before that, you need to configure some more things up.
+
+----
 
 ## 2. Configure Gogs
 
@@ -229,6 +233,8 @@ There are other useful settings like email, oauth, webhook, ... etc.
 
 I will try them out soon. :godmode:
 
+----
+
 ## 3. Run Gogs
 
 All things up, now Gogs is ready to run!
@@ -357,6 +363,8 @@ $ sudo update-rc.d gogs-service defaults
 {% endhighlight %}
 
 Well done! :beer:
+
+----
 
 ## 99. Wrap-up
 

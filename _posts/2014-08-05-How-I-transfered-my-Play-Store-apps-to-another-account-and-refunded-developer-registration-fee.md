@@ -16,6 +16,8 @@ And here I record the process of transfer and refund:
 ## 1. Create a new Google account.
 
 
+----
+
 ## 2. Finish the developer registration process on that new account.
 
 If you proceed to the next step without finishing the registration process, you\'ll receive an email like this:
@@ -31,6 +33,7 @@ If you proceed to the next step without finishing the registration process, you\
 	Once the target account registration has fully processed,
 	feel free to respond to this email and we'll proceed with your app transfer. 
 
+----
 
 ## 3. Request for a transfer.
 
@@ -52,6 +55,7 @@ You\'ll also have to write down the titles and package names of your apps.
 
 The request will be processed in 48 hours(or even faster if you are lucky) after the submission.
 
+----
 
 ## 4. Request for a refund of your old account\'s developer registration fee.
 
@@ -76,6 +80,7 @@ Visit [this link](https://support.google.com/googleplay/android-developer/contac
 
 It will also be processed in 48 hours(or less).
 
+----
 
 ## 5. (Optional) Delete your old account.
 

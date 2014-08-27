@@ -18,7 +18,11 @@ Here is the way:
 
 ## 1. Get a clean raspberry pi installation,
 
+----
+
 ## 2. Attach your external USB HDD,
+
+----
 
 ## 3. Create partitions,
 
@@ -81,6 +85,8 @@ Syncing disks.
 
 Now the swap partition is **/dev/sdX1**, and the root partition is **/dev/sdX2**.
 
+----
+
 ## 4. Edit /etc/fstab file,
 
 {% highlight bash %}
@@ -104,6 +110,8 @@ proc            /proc    proc    defaults          0    0
 /dev/sdX2       /        ext4    defaults,noatime  0    1
 ~~~~
 
+----
+
 ## 5. Format partitions and copy contents to the HDD from SD card,
 
 {% highlight bash %}
@@ -120,6 +128,8 @@ $ sudo e2fsck -f /dev/sdX2
 # (resize partition)
 $ sudo resize2fs /dev/sdX2
 {% endhighlight %}
+
+----
 
 ## 6. Set it up,
 
@@ -144,6 +154,8 @@ dwc_otg.lpm_enable=0 console=ttyAMA0,115200 console=tty1 root=/dev/sdX2 rootfsty
 {% endhighlight %}
 
 * __bootdelay__ and __rootdelay__ is important here. Without them, it was not bootable with horrible error messages for me.
+
+----
 
 ## 7. ...and reboot!
 
