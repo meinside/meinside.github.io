@@ -295,6 +295,8 @@ nav {
 }
 .post-tags {
   text-align: right;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 // meinside - header background image
@@ -321,6 +323,20 @@ nav {
       color: $lightGray;
     }
   }
+}
+
+// meinside - date of post
+.index-post-date {
+  font-style: italic;
+  color: $gray;
+  text-align: right;
+}
+.post-date {
+  font-style: italic;
+  color: $gray;
+  text-align: right;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .wrapper-footer {
