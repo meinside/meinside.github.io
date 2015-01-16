@@ -1,13 +1,13 @@
 ---
 layout: post
-title: How I transfered my Play Store apps to another account and refunded developer registration fee
+title: How I transfered my Google Play Store apps to another account and refunded developer registration fee
 tags:
 - android
 - google
 published: true
 ---
 
-Yesterday I moved all of my Play Store apps to a new account due to some issues on my Google Wallet.
+Yesterday I moved all of my Google Play Store apps to a new account due to some issues on my Google Wallet.
 
 And here I record the process of transfer and refund:
 
@@ -20,7 +20,7 @@ And here I record the process of transfer and refund:
 
 ## 2. Finish the developer registration process on that new account.
 
-If you proceed to the next step without finishing the registration process, you\'ll receive an email like this:
+If you proceed to the next step without finishing the registration process, you'll receive an email like this:
 
 	After researching the target account, we've found that the registration fee payment is still in process.
 	This can take up to 48 hours to complete. 
@@ -51,17 +51,17 @@ You can find the transaction ids in them.
 
 Go to [this link](https://support.google.com/googleplay/android-developer/checklist/3294213) and fill out the form.
 
-You\'ll also have to write down the titles and package names of your apps.
+You'll also have to write down the titles and package names of your apps.
 
 The request will be processed in 48 hours(or even faster if you are lucky) after the submission.
 
 ----
 
-## 4. Request for a refund of your old account\'s developer registration fee.
+## 4. Request for a refund of your old account's developer registration fee.
 
 ### A. Make sure you have no apps left on your old account.
 
-If you go to the next step with apps left on your account, you\'ll receive an email like this:
+If you go to the next step with apps left on your account, you'll receive an email like this:
 
 	Unfortunately we are unable to close a Google Play Developer Console account that has apps with customer downloads.
 	As you may recall, our Developer Distribution Agreement (DDA) allows Google Play customers unlimited app reinstalls.
@@ -84,7 +84,7 @@ It will also be processed in 48 hours(or less).
 
 ## 5. (Optional) Delete your old account.
 
-Make sure you\'re signed out from your new account and sign in back with your old account.
+Make sure you're signed out from your new account and sign in back with your old account.
 
 And do as [this link](https://support.google.com/accounts/answer/32046) says.
 

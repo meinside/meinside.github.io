@@ -121,7 +121,7 @@ $ mkdir -p ~/somewhere/gogs-repositories
 
 Gogs needs some [configuration](http://gogs.io/docs/installation/configuration_and_run.md) before running.
 
-It recommends*(or forces? I'm not sure.)* to keep custom config files rather than modifying the default ones directly.
+It **recommends** *(or forces? I'm not sure.)* to keep custom config files rather than modifying the default ones directly.
 
 So, duplicate the `conf/app.ini` file first.
 
@@ -231,7 +231,7 @@ APP_NAME = Gogs on my Raspberry Pi
 
 There are other useful settings like email, oauth, webhook, ... etc.
 
-I will try them out soon. :godmode:
+I will try them out soon. :-)
 
 ----
 
@@ -356,19 +356,19 @@ Edit **GOGS_DIR** and **GOGS_USER** as you need,
 
 then Gogs can now be started with `sudo service gogs-service start` and stopped with `sudo service gogs-service stop`.
 
-:heavy_exclamation_mark: For making Gogs start automatically on every boot,
+**!!!** For making Gogs start automatically on every boot,
 
 {% highlight bash %}
 $ sudo update-rc.d gogs-service defaults
 {% endhighlight %}
 
-Well done! :beer:
+Well done! :-D
 
 ----
 
 ## 99. Wrap-up
 
-Gogs is not only a useful application, but also good to run on Raspberry Pis. :+1:
+Gogs is not only a useful application, but also good to run on Raspberry Pis.
 
 I decided to learn Golang for further use on Raspberry Pi :-)
 

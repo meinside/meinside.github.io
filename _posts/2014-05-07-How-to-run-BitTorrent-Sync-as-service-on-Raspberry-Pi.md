@@ -153,15 +153,15 @@ with the username(**login**) and password you set in the config file.
 
 ## 4. Trouble Shooting
 
-### X. It doesn\'t work!
+### X. It doesn't work!
 
-If anything goes wrong or doesn\'t work as you expected, try executing the binary directly:
+If anything goes wrong or doesn't work as you expected, try executing the binary directly:
 
 {% highlight bash %}
 $ btsync --config /filepath/of/btsync.conf
 {% endhighlight %}
 
-then you\'ll see the reason in the error message.
+then you'll see the reason in the error message.
 
 ### X. It crashes my Raspberry Pi!
 

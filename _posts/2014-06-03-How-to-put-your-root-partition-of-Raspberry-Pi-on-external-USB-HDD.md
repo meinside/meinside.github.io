@@ -26,7 +26,7 @@ Here is the way:
 
 ## 3. Create partitions,
 
-* you should replace **X** with your HDD drive\'s letter (eg. /dev/sd**a**, /dev/sd**b**, ...)
+* you should replace **X** with your HDD drive's letter (eg. /dev/sd**a**, /dev/sd**b**, ...)
 
 {% highlight bash %}
 $ sudo fdisk /dev/sdX

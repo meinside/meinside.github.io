@@ -8,7 +8,7 @@ published: true
 
 This blog is running on [Jekyll](http://jekyllrb.com/), hosted by [GitHub](https://github.com/).
 
-I wanted a tag cloud and archives page for it, but most plugins would\'t work well with Jekyll version 2.2.x.
+I wanted a tag cloud and archives page for it, but most plugins would't work well with Jekyll version 2.2.x.
 
 I spent nearly two days before I found [this post](http://kalapun.com/blog/2014/01/27/liquid-tag-management-for-jekyll/), and finally got it working.
 
