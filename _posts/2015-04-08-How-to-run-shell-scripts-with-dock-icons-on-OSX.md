@@ -5,7 +5,7 @@ tags:
 - raspberry pi
 - apple script
 - atom
-published: true
+published: false
 ---
 
 Sometimes you'll need to run shell scripts through dock icons on your OSX boxes.
