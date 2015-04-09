@@ -41,7 +41,7 @@ If you want Atom to be opened in your home directory, do like this:
 do shell script "/usr/local/bin/atom" & " $HOME"
 ```
 
-I don't know what's the reason, but in Apple Script, you have to append optional parametes with '&'.
+I don't know what's the reason, but in Apple Script, you have to append shell parameters with '&'.
 
 Trailing **" $HOME"** will make Atom editor launched in your home directory, so you can change it to any location you want.
 
