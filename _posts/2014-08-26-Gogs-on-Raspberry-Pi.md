@@ -7,6 +7,8 @@ tags:
 published: true
 ---
 
+_(updated: 2015-06-03)_
+
 [Gogs](http://gogs.io) is a [github](https://github.com)-like Git service built with [Golang](http://golang.org).
 
 With Gogs, you can run your own Git service on Raspberry Pi very easily.
@@ -55,34 +57,40 @@ $ sudo apt-get install mysql-server
 $ sudo apt-get install postgresql
 {% endhighlight %}
 
+### D. Create a directory for repositories
+
+{% highlight bash %}
+$ mkdir ~/repositories
+{% endhighlight %}
+
 ----
 
 ## 1. Checkout and build Gogs source code
 
 Gogs has no pre-built binaries for Raspberry Pi yet, so there's only one choice: [Install From Source Code](http://gogs.io/docs/installation/install_from_source.html).
 
-### a. If you don't need SQLite3 support,
+### a. If you don't need SQLite3/Redis/Memcache support,
 
 In your terminal,
 
 {% highlight bash %}
 # download and install dependencies (takes some time)
-$ go get -u github.com/gogits/gogs
+$ go get -u -tags "cert" github.com/gogits/gogs
 
 # build
 $ cd $GOPATH/src/github.com/gogits/gogs
 $ go build
 {% endhighlight %}
 
-### b. If you need to enable SQLite3,
+### b. If you need to enable SQLite3/Redis/Memcache,
 
 {% highlight bash %}
 # download and install dependencies (takes some time)
-$ go get -u -tags sqlite github.com/gogits/gogs
+$ go get -u -tags "cert sqlite redis memcache" github.com/gogits/gogs
 
 # build
 $ cd $GOPATH/src/github.com/gogits/gogs
-$ go build -tags sqlite
+$ go build -tags "cert sqlite redis memcache"
 {% endhighlight %}
 
 Gogs is nearly ready to run!
@@ -109,15 +117,7 @@ mysql> CREATE DATABASE IF NOT EXISTS gogs CHARACTER SET utf8 COLLATE utf8_genera
 mysql> GRANT ALL ON gogs.* to 'gogs'@'localhost' identified by 'SOME_PASSWORD';
 {% endhighlight %}
 
-### b. Setup repository
-
-Create a directory where your raw repository data will be saved.
-
-{% highlight bash %}
-$ mkdir -p ~/somewhere/gogs-repositories
-{% endhighlight %}
-
-### c. Edit configuration
+### b. Edit configuration
 
 Gogs needs some [configuration](http://gogs.io/docs/installation/configuration_and_run.md) before running.
 
@@ -138,13 +138,13 @@ Now let's edit the duplicated config file.
 $ vi custom/conf/app.ini
 {% endhighlight %}
 
-#### (1) repository path
+#### (1) user and repository path
 
-Change **ROOT** to the path of the directory which you created above.
+Change **ROOT** to the path of the repository directory which you created above:
 
 {% highlight bash %}
 [repository]
-ROOT = /home/pi/somewhere/gogs-repositories
+ROOT = /home/some_user/repositories
 {% endhighlight %}
 
 #### (2) database connection
@@ -184,28 +184,38 @@ PROTOCOL = http
 DOMAIN = my-raspberrypi-domain.com
 ROOT_URL = %(PROTOCOL)s://%(DOMAIN)s:%(HTTP_PORT)s/
 HTTP_ADDR =
-HTTP_PORT = 8080
+HTTP_PORT = 3000
+; Disable SSH feature when not available
+DISABLE_SSH = false
 SSH_PORT = 22
 ; Disable CDN even in "prod" mode
 OFFLINE_MODE = false
 DISABLE_ROUTER_LOG = false
 ; Generate steps:
 ; $ cd path/to/gogs/custom/https
-; $ go run $GOROOT/src/pkg/crypto/tls/generate_cert.go -ca=true -duration=8760h0m0s -host=my-raspberrypi-domain.com
+; $ ./gogs cert -ca=true -duration=8760h0m0s -host=myhost.example.com
+;
+; Or from a .pfx file exported from the Windows certificate store (do
+; not forget to export the private key):
+; $ openssl pkcs12 -in cert.pfx -out cert.pem -nokeys
+; $ openssl pkcs12 -in cert.pfx -out key.pem -nocerts -nodes
 CERT_FILE = custom/https/cert.pem
 KEY_FILE = custom/https/key.pem
 ; Upper level of template and static file path
 ; default is the path where Gogs is executed
 STATIC_ROOT_PATH =
+; Application level GZIP support
+ENABLE_GZIP = false
+; Landing page for non-logged users, can be "home" or "explore"
+LANDING_PAGE = home
 {% endhighlight %}
 
 You may also have to generate certificate files as the comment says:
 
 {% highlight bash %}
-$ cd $GOPATH/src/github.com/gogits/gogs
-$ mkdir -p custom/https
-$ cd custom/https
-$ go run $GOROOT/src/pkg/crypto/tls/generate_cert.go -ca=true -duration=8760h0m0s -host=my-raspberrypi-domain.com
+$ mkdir -p cd $GOPATH/src/github.com/gogits/gogs/custom/https
+$ cd $GOPATH/src/github.com/gogits/gogs/custom/https
+$ ../../gogs cert -ca=true -duration=8760h0m0s -host=my-raspberrypi-domain.com
 {% endhighlight %}
 
 #### (5) secret key
@@ -250,117 +260,55 @@ $ ./gogs web
 
 If nothing goes wrong, you can connect to Gogs with any web browser.
 
-Connect to the address, eg: [http://my-raspberrypi-domain.com:8080](http://my-raspberrypi-domain.com:8080).
+Connect to the address, eg: [http://my-raspberrypi-domain.com:3000](http://my-raspberrypi-domain.com:3000).
 
 You'll meet **Install Steps For First-time Run** page demanding some check-ups.
 
-If you see a complaint about **Run User**, change it to your current user name.
-
-It can be changed manually in the `custom/conf/app.ini` file:
-
-{% highlight bash %}
-; Change it if you run locally
-RUN_USER = some_user
-{% endhighlight %}
+When you see complaints about your settings, do as the error message suggests.
 
 If all things are OK, you can login with the username and password which were set in the previous page.
 
 ### B. Run as a service
 
-You cannot run Gogs from the shell everytime, so let's try to run as a service.
+You cannot run Gogs from the shell manually everytime, so let's try to run it as a service.
 
-Create an init.d script file for Gogs:
+Copy an init.d script file from the source codes:
 
 {% highlight bash %}
-$ sudo touch /etc/init.d/gogs-service
-$ sudo chmod +x /etc/init.d/gogs-service
+$ sudo cp $GOPATH/src/github.com/gogits/gogs/scripts/init/debian/gogs /etc/init.d/gogs-service
 {% endhighlight %}
 
-Edit `/etc/init.d/gogs-service` file with following content:
+Edit `/etc/init.d/gogs-service` file:
 
 {% highlight bash %}
-#!/bin/bash
-#/etc/init.d/gogs-service
-#
-
-### BEGIN INIT INFO
-# Provides:          gogs-service
-# Required-Start:    $remote_fs $syslog
-# Required-Stop:     $remote_fs $syslog
-# Default-Start:     2 3 4 5
-# Default-Stop:      0 1 6
-# Short-Description: Gogs service
-# Description:       init.d script for Gogs service
-### END INIT INFO
-
-# XXX - edit these
-GOGS_DIR="/some/where/gogs"
-GOGS_USER="some_user"
-
-GOGS_USER_HOME="/home/$GOGS_USER"
-GOGS_START_SCRIPT="$GOGS_DIR/start.sh"
-GOGS_LOG_DIR="$GOGS_DIR/log"
-
-start_gogs() {
-  echo "Starting gogs..."
-  su - $GOGS_USER -c "nohup $GOGS_START_SCRIPT > $GOGS_LOG_DIR/gogs.log 2>&1 &"
-}
-
-# Gogs needs a home path.
-export HOME=$GOGS_USER_HOME
-
-# commands
-case "$1" in
-  start)
-    ps aux | grep 'gogs' | grep -v grep | grep -vq start
-    if [ $? = 0 ]; then
-      echo "Gogs is already running."
-    else
-      start_gogs
-    fi
-    ;;
-  stop)
-    ps aux | grep 'gogs' | grep -v grep | grep -vq stop
-    if [ $? = 0 ]; then
-      echo "Stopping Gogs."
-      kill `ps -ef | grep 'gogs' | grep -v grep | awk '{print $2}'`
-    else
-      echo "Gogs is already stopped."
-    fi
-    ;;
-  restart)
-    ps aux | grep 'gogs' | grep -v grep | grep -vq restart
-    if [ $? = 0 ]; then
-      kill `ps -ef | grep 'gogs' | grep -v grep | awk '{print $2}'`
-    fi
-    start_gogs
-    ;;
-  status)
-    ps aux | grep 'gogs' | grep -v grep | grep -vq status
-    if [ $? = 0 ]; then
-      echo "Gogs is running."
-    else
-      echo "Gogs is stopped."
-    fi
-    ;;
-  *)
-    echo "Usage: /etc/init.d/gogs-service {start|stop|restart|status}"
-    exit 1
-    ;;
-esac
-
-exit 0
+# Required-Start:    $syslog $network $local_fs mysql
+# Required-Stop:     $syslog $local_fs
 {% endhighlight %}
 
-Edit **GOGS_DIR** and **GOGS_USER** as you need,
-
-then Gogs can now be started with `sudo service gogs-service start` and stopped with `sudo service gogs-service stop`.
-
-**!!!** For making Gogs start automatically on every boot,
+Also, edit **WORKING_DIR** and **USER**,
 
 {% highlight bash %}
+# PATH should only include /usr/* if it runs after the mountnfs.sh script
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+DESC="Go Git Service"
+NAME=gogs
+SERVICEVERBOSE=yes
+PIDFILE=/var/run/$NAME.pid
+SCRIPTNAME=/etc/init.d/$NAME
+WORKINGDIR=/home/some_user/gogs
+DAEMON=$WORKINGDIR/$NAME
+DAEMON_ARGS="web"
+USER=some_user
+{% endhighlight %}
+
+and make it run automatically on boot time:
+
+{% highlight bash %}
+$ sudo chmod ug+x /etc/init.d/gogs-service
 $ sudo update-rc.d gogs-service defaults
 {% endhighlight %}
+
+Gogs can now be manually started with `sudo service gogs-service start` and stopped with `sudo service gogs-service stop`.
 
 Well done! :-D
 
