@@ -278,14 +278,7 @@ Copy an init.d script file from the source codes:
 $ sudo cp $GOPATH/src/github.com/gogits/gogs/scripts/init/debian/gogs /etc/init.d/gogs
 {% endhighlight %}
 
-Edit `/etc/init.d/gogs` file:
-
-{% highlight bash %}
-# Required-Start:    $syslog $network $local_fs mysql
-# Required-Stop:     $syslog $local_fs
-{% endhighlight %}
-
-Also, edit **WORKING_DIR** and **USER**,
+and edit **WORKING_DIR** and **USER**,
 
 {% highlight bash %}
 # PATH should only include /usr/* if it runs after the mountnfs.sh script
@@ -305,7 +298,9 @@ and make it run automatically on boot time:
 
 {% highlight bash %}
 $ sudo chmod ug+x /etc/init.d/gogs
-$ sudo update-rc.d gogs defaults
+
+# if gogs has higher priority that database server, it would fail to launch on boot time
+$ sudo update-rc.d gogs defaults 98
 {% endhighlight %}
 
 Gogs can now be manually started with `sudo service gogs start` and stopped with `sudo service gogs stop`.
