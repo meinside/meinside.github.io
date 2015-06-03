@@ -275,10 +275,10 @@ You cannot run Gogs from the shell manually everytime, so let's try to run it as
 Copy an init.d script file from the source codes:
 
 {% highlight bash %}
-$ sudo cp $GOPATH/src/github.com/gogits/gogs/scripts/init/debian/gogs /etc/init.d/gogs-service
+$ sudo cp $GOPATH/src/github.com/gogits/gogs/scripts/init/debian/gogs /etc/init.d/gogs
 {% endhighlight %}
 
-Edit `/etc/init.d/gogs-service` file:
+Edit `/etc/init.d/gogs` file:
 
 {% highlight bash %}
 # Required-Start:    $syslog $network $local_fs mysql
@@ -304,11 +304,11 @@ USER=some_user
 and make it run automatically on boot time:
 
 {% highlight bash %}
-$ sudo chmod ug+x /etc/init.d/gogs-service
-$ sudo update-rc.d gogs-service defaults
+$ sudo chmod ug+x /etc/init.d/gogs
+$ sudo update-rc.d gogs defaults
 {% endhighlight %}
 
-Gogs can now be manually started with `sudo service gogs-service start` and stopped with `sudo service gogs-service stop`.
+Gogs can now be manually started with `sudo service gogs start` and stopped with `sudo service gogs stop`.
 
 Well done! :-D
 
