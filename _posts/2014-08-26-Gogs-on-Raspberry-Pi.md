@@ -7,7 +7,7 @@ tags:
 published: true
 ---
 
-_(updated: 2015-06-03)_
+_(updated: 2015-11-04)_
 
 [Gogs](http://gogs.io) is a [github](https://github.com)-like Git service built with [Golang](http://golang.org).
 
@@ -44,6 +44,13 @@ fi
 
 Close your terminal and open a new one, then you will be able to run golang excutables.
 
+You can check your installation with following command:
+
+{% highlight bash %}
+$ go version
+go version go1.5.1 linux/arm
+{% endhighlight %}
+
 ### C. Install other requirements for Gogs
 
 You'll need to install some more packages before going to the next step.
@@ -65,9 +72,9 @@ $ mkdir ~/repositories
 
 ----
 
-## 1. Checkout and build Gogs source code
+## 1-A. Checkout and build latest Gogs source code
 
-Gogs has no pre-built binaries for Raspberry Pi yet, so there's only one choice: [Install From Source Code](http://gogs.io/docs/installation/install_from_source.html).
+If you want to build Gogs from the source code, here is the way: [Install From Source Code](http://gogs.io/docs/installation/install_from_source.html).
 
 ### a. If you don't need SQLite3/Redis/Memcache support,
 
@@ -92,6 +99,14 @@ $ go get -u -tags "cert sqlite redis memcache" github.com/gogits/gogs
 $ cd $GOPATH/src/github.com/gogits/gogs
 $ go build -tags "cert sqlite redis memcache"
 {% endhighlight %}
+
+## 1-B. Or, you can download pre-built binary
+
+Download pre-built binary (**Linux arm** for Raspberry Pi!) from this page: [Download](https://github.com/gogits/gogs/wiki/Download)
+
+and follow the installation instruction [here](http://gogs.io/docs/installation/install_from_binary).
+
+----
 
 Gogs is nearly ready to run!
 
