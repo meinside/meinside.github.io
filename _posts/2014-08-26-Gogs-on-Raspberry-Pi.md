@@ -13,7 +13,7 @@ _(updated: 2015-06-03)_
 
 With Gogs, you can run your own Git service on Raspberry Pi very easily.
 
-![gogs_logo](http://gogs.io/imgs/gogs-lg.png)
+![gogs_logo](https://github.com/gogits/gogs/raw/master/public/img/gogs-large-resize.png)
 
 ----
 
