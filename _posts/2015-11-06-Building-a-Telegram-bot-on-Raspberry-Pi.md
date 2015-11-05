@@ -56,7 +56,7 @@ If you search for your bot, it will be found like this:
 
 ![search_my_bot](https://cloud.githubusercontent.com/assets/185988/10966169/2338707e-83f5-11e5-83aa-445b450a4b17.png)
 
-Ok, good to go on!
+OK, good to go on!
 
 ## 3. Create a self-signed certificate for callbacks from Telegram
 
@@ -160,7 +160,7 @@ Now try running it:
 $ go run echo_bot.go
 {% endhighlight %}
 
-Whenever you send messages to this bot, it will send them back to you.
+Whenever you send messages to this bot, it will send them back to you:
 
 ![echo_bot](https://cloud.githubusercontent.com/assets/185988/10966172/257b1a08-83f5-11e5-946d-e4ec1714a473.png)
 
@@ -170,9 +170,9 @@ Echo bot is good for testing, but not enough for Raspberry Pi, so let's add some
 
 I want the bot to function as a server-status checker.
 
-For example, it should return the uptime of Raspberry Pi when I input /uptime command and so on.
+For example, it should return the uptime of Raspberry Pi when I input **/uptime** command and so on.
 
-Let's add following codes to the previous code:
+Let's add following code to the previous bot code:
 
 {% highlight go %}
 import "os/exec"
@@ -198,7 +198,7 @@ func getDate() string {
 }
 {% endhighlight %}
 
-and alter several lines in main:
+and alter several lines in main():
 
 {% highlight go %}
 botMessage := DefaultMessage
@@ -309,7 +309,7 @@ When starting chat with this bot, you will be asked to input commands:
 
 ![cmd_bot](https://cloud.githubusercontent.com/assets/185988/10966176/2861915c-83f5-11e5-91a6-ed2aa409db51.png)
 
-then it will respond to each of them as you see.
+then it will respond to each of them as you select.
 
 ## 6. Trouble shooting
 
