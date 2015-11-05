@@ -10,7 +10,7 @@ published: true
 
 [Telegram](https://telegram.org/) provides free but extremely useful [bot API](https://core.telegram.org/bots/api).
 
-Here are my notes about building one on my [Raspberry Pi](https://www.raspberrypi.org/) server.
+Here are my notes about building a bot on my [Raspberry Pi](https://www.raspberrypi.org/) server.
 
 ----
 
@@ -48,8 +48,6 @@ then you'll get a token like this:
 
 ![token_botfather](https://cloud.githubusercontent.com/assets/185988/10962922/4fbd9bb2-83df-11e5-9bd1-639d7cbf7468.png)
 
-In my case, token is *143698981:AAEqRwAitUr9PYbHyCLk6w32MNHizRZ9yvk*.
-
 You can run a bot with this token from now on.
 
 If you search for your bot, it will be found like this:
@@ -60,7 +58,7 @@ OK, good to go on!
 
 ## 3. Create a self-signed certificate for callbacks from Telegram
 
-Telegram demands SSL connection on bots' webhook servers.
+Telegram demands SSL connection on bots' webhook callbacks.
 
 Fortunately, it supports self-signed certificates, so I didn't have to waste my money on it.
 
