@@ -38,7 +38,7 @@ It should be done in *(maybe official?)* Telegram applications.
 
 Search for **botfather** and start conversation with it.
 
-![search_botfather](https://cloud.githubusercontent.com/assets/185988/10962912/4513574c-83df-11e5-903d-346107f87570.png)
+![search_botfather](https://cloud.githubusercontent.com/assets/185988/10966167/2062106c-83f5-11e5-8f91-8af0bcdea096.png)
 
 Input **/newbot** or select it from the command menu and follow the instruction from the bot,
 
@@ -54,7 +54,7 @@ You can run a bot with this token from now on.
 
 If you search for your bot, it will be found like this:
 
-![my_rpi_telegram_bot](https://cloud.githubusercontent.com/assets/185988/10962925/53f3f71c-83df-11e5-8f27-f9b934d5ab63.png)
+![search_my_bot](https://cloud.githubusercontent.com/assets/185988/10966169/2338707e-83f5-11e5-83aa-445b450a4b17.png)
 
 Ok, good to go on!
 
@@ -162,7 +162,7 @@ $ go run echo_bot.go
 
 Whenever you send messages to this bot, it will send them back to you.
 
-![echo_bot](https://cloud.githubusercontent.com/assets/185988/10963659/7ec1e6c4-83e5-11e5-8833-ba9e7a72ccd6.png)
+![echo_bot](https://cloud.githubusercontent.com/assets/185988/10966172/257b1a08-83f5-11e5-946d-e4ec1714a473.png)
 
 Echo bot is good for testing, but not enough for Raspberry Pi, so let's add some more features on it.
 
@@ -307,7 +307,7 @@ func main() {
 
 When starting chat with this bot, you will be asked to input commands:
 
-![cmd_bot](https://cloud.githubusercontent.com/assets/185988/10964705/164e369a-83ec-11e5-964f-dbdd16c2ca0b.png)
+![cmd_bot](https://cloud.githubusercontent.com/assets/185988/10966176/2861915c-83f5-11e5-91a6-ed2aa409db51.png)
 
 then it will respond to each of them as you see.
 
