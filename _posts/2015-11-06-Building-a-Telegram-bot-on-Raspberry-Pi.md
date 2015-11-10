@@ -117,21 +117,21 @@ func main() {
 
 	// get info about this bot
 	if me := client.GetMe(); me.Ok {
-		fmt.Printf("Bot information: @%s (%s)\n", me.Result.Username, me.Result.FirstName)
+		fmt.Printf("Bot information: @%s (%s)\n", *me.Result.Username, *me.Result.FirstName)
 
 		// set webhook url
 		if hooked := client.SetWebhook(WebhookHost, WebhookPort, CertFilename); hooked.Ok {
-			fmt.Printf("SetWebhook was successful: %s\n", hooked.Description)
+			fmt.Printf("SetWebhook was successful: %s\n", *hooked.Description)
 
 			// on success, start webhook server
 			client.StartWebhookServerAndWait(CertFilename, KeyFilename, func(webhook bot.Webhook, success bool, err error) {
 				if success {
-					botMessage := webhook.Message.Text
+					message := webhook.Message.Text
 					options := map[string]interface{}{
-						"reply_to_message_id":      webhook.Message.MessageId,
+						"reply_to_message_id": webhook.Message.MessageId,
 					}
-					if sent := client.SendMessage(webhook.Message.Chat.Id, &botMessage, &options); !sent.Ok {
-						fmt.Printf("*** failed to send message: %s\n", sent.Description)
+					if sent := client.SendMessage(webhook.Message.Chat.Id, message, options); !sent.Ok {
+						fmt.Printf("*** failed to send message: %s\n", *sent.Description)
 					}
 				} else {
 					fmt.Printf("*** error while receiving webhook (%s)\n", err.Error)
@@ -199,13 +199,13 @@ func getDate() string {
 and alter several lines in main():
 
 {% highlight go %}
-botMessage := DefaultMessage
+message := DefaultMessage
 
-switch webhook.Message.Text {
+switch *webhook.Message.Text {
 case CommandUptime:
-	botMessage = getUptime()
+	message = getUptime()
 case CommandDate:
-	botMessage = getDate()
+	message = getDate()
 }
 options := map[string]interface{}{
 	"reply_markup": bot.ReplyKeyboardMarkup{
@@ -263,22 +263,22 @@ func main() {
 
 	// get info about this bot
 	if me := client.GetMe(); me.Ok {
-		fmt.Printf("Bot information: @%s (%s)\n", me.Result.Username, me.Result.FirstName)
+		fmt.Printf("Bot information: @%s (%s)\n", *me.Result.Username, *me.Result.FirstName)
 
 		// set webhook url
 		if hooked := client.SetWebhook(WebhookHost, WebhookPort, CertFilename); hooked.Ok {
-			fmt.Printf("SetWebhook was successful: %s\n", hooked.Description)
+			fmt.Printf("SetWebhook was successful: %s\n", *hooked.Description)
 
 			// on success, start webhook server
 			client.StartWebhookServerAndWait(CertFilename, KeyFilename, func(webhook bot.Webhook, success bool, err error) {
 				if success {
-					botMessage := DefaultMessage
+					message := DefaultMessage
 
-					switch webhook.Message.Text {
+					switch *webhook.Message.Text {
 					case CommandUptime:
-						botMessage = getUptime()
+						message = getUptime()
 					case CommandDate:
-						botMessage = getDate()
+						message = getDate()
 					}
 					options := map[string]interface{}{
 						"reply_markup": bot.ReplyKeyboardMarkup{
@@ -287,8 +287,8 @@ func main() {
 							},
 						},
 					}
-					if sent := client.SendMessage(webhook.Message.Chat.Id, &botMessage, &options); !sent.Ok {
-						fmt.Printf("*** failed to send message: %s\n", sent.Description)
+					if sent := client.SendMessage(webhook.Message.Chat.Id, &message, options); !sent.Ok {
+						fmt.Printf("*** failed to send message: %s\n", *sent.Description)
 					}
 				} else {
 					fmt.Printf("*** error while receiving webhook (%s)\n", err.Error)
