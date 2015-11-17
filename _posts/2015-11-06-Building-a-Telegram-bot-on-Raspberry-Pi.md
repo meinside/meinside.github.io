@@ -134,7 +134,7 @@ func main() {
 						fmt.Printf("*** failed to send message: %s\n", *sent.Description)
 					}
 				} else {
-					fmt.Printf("*** error while receiving webhook (%s)\n", err.Error)
+					fmt.Printf("*** error while receiving webhook (%s)\n", err.Error())
 				}
 			})
 		} else {
@@ -291,7 +291,7 @@ func main() {
 						fmt.Printf("*** failed to send message: %s\n", *sent.Description)
 					}
 				} else {
-					fmt.Printf("*** error while receiving webhook (%s)\n", err.Error)
+					fmt.Printf("*** error while receiving webhook (%s)\n", err.Error())
 				}
 			})
 		} else {
