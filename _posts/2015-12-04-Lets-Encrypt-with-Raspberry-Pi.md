@@ -27,15 +27,15 @@ $ cd letsencrypt
 
 ## 2. Create & install certificate
 
-*letsencrypt-auto* is the excutable file.
-
-Everytime when running it, it will take some time in Raspberry Pi.
+On Raspberry Pi, it will take some time everytime when you run the command.
 
 ```bash
 ./letsencrypt-auto --help all
 ```
 
-Run it with desired options.
+It will show all options and their descriptions.
+
+Then run it again with desired options:
 
 ```bash
 $ ./letsencrypt-auto -d MY_DOMAIN1 -d MY_DOMAIN2 --apache -m MY_EMAIL --redirect --agree-tos
@@ -45,7 +45,9 @@ When **--apache** is given, it will configure things up for Apache by itself.
 
 With **--redirect**, access requests to HTTP will be redirected to HTTPS automatically.
 
-With **certonly --standalone**, it will just create certificate files, keeping all others untouched.
+If **certonly --standalone** given, it will just create certificate files, keeping all others untouched.
+
+After some time, it will show a report of the issuance and some guide about backing up your files, so read them carefully.
 
 ## 3. Renew certificate
 
