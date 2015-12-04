@@ -30,7 +30,7 @@ $ cd letsencrypt
 On Raspberry Pi, it will take some time everytime when you run the command.
 
 ```bash
-./letsencrypt-auto --help all
+$ ./letsencrypt-auto --help all
 ```
 
 It will show all options and their descriptions.
