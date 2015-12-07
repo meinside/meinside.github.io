@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Let's encrypt with ACME client utilities
+title: Let's encrypt with Go ACME client utilities
 tags:
 - letsencrypt
 - raspberry pi
@@ -8,7 +8,7 @@ tags:
 published: true
 ---
 
-With [ACME client utilities](https://github.com/hlandau/acme), acquiring and renewing certificates from [Let's Encrypt](https://letsencrypt.org/) is a lot easier.
+With [Go ACME client utilities](https://github.com/hlandau/acme), acquiring and renewing certificates from [Let's Encrypt](https://letsencrypt.org/) is a lot easier.
 
 Here are how things go so easily.
 
