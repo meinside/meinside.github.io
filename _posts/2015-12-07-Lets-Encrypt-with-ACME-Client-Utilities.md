@@ -122,7 +122,7 @@ $ sudo service apache2 restart
 $ sudo `which acmetool` want subdomain.mydomain.com
 ```
 
-If nothing goes wrong, you will see your certificate files in **/var/lib/acme/live/subdomain.mydomain.com**.
+If nothing goes wrong, you will see your certificate files in **/var/lib/acme/live/subdomain.mydomain.com** directory.
 
 ### C. Finish configuration with generated certificates
 

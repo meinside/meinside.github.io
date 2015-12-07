@@ -7,6 +7,8 @@ tags:
 published: true
 ---
 
+(Updated: I found a better way [here](http://blog.meinside.pe.kr/Lets-Encrypt-with-ACME-Client-Utilities/).)
+
 [Let's Encrypt](https://letsencrypt.org/) started public beta today.
 
 It provides free and semi-automated certificate issuance/renewal/revocation.
