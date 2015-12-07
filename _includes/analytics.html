@@ -9,10 +9,10 @@
     ga('create', '{{ site.google_analytics }}', 'auto');
     ga('require', 'displayfeatures');
     ga('require', 'linkid', 'linkid.js');
-    ga('send', 'pageview', {
-      'page': '{{ page.url }}',
-      'title': '{{ page.title | replace: "'", "\\'" }}'
-    });
+		ga('send', 'pageview', {
+		  'page': '{{ site.baseurl }}{{ page.url }}',
+		  'title': '{{ page.title | replace: "'", "\\'" }}'
+		});
   </script>
   <!-- End Google Analytics -->
 {% endif %}
