@@ -70,7 +70,7 @@ It will be used when Let's Encrypt tries to reach you, so make sure it is the co
 ## 3. Setup your web server
 
 I prefer Apache2, and here's what I did for it:
-(See [this page](https://github.com/hlandau/acme.t/blob/master/doc/WSCONFIG.md) for the detail)
+(See [this page](https://github.com/hlandau/acme/blob/master/_doc/WSCONFIG.md) for the detail)
 
 ### A. Add alias for challenge files' directory
 
