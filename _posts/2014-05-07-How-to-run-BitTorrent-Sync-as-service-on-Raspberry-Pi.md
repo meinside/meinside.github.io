@@ -107,7 +107,9 @@ and edit configurations as you need: **device\_name**, **storage\_path**, **logi
 
 ## 3. Register BitTorrent Sync as a service
 
-### A. Create an init.d script
+### A. For init.d
+
+#### a. Create an init.d script
 
 Create a file with following content:
 
@@ -115,7 +117,7 @@ Create a file with following content:
 
 or download from [here](https://gist.githubusercontent.com/meinside/7825826/raw/b68d29d4faefd1dd212565d4d92596684621b489/btsync-service).
 
-### B. Edit the init.d script
+#### b. Edit the init.d script
 
 {% highlight bash %}
 $ vi btsync-service
@@ -123,7 +125,7 @@ $ vi btsync-service
 
 Then replace **BTSYNC\_DIR** and **BTSYNC\_CONFIG** with the locations of yours.
 
-### C. Register it as service
+#### c. Register it as service
 
 {% highlight bash %}
 $ sudo cp btsync-service /etc/init.d/
@@ -133,7 +135,7 @@ $ sudo chmod +x /etc/init.d/btsync-service
 $ sudo update-rc.d btsync-service defaults
 {% endhighlight %}
 
-### D. Run BitTorrent Sync
+#### d. Run BitTorrent Sync
 
 {% highlight bash %}
 # start,
@@ -142,6 +144,45 @@ $ sudo service btsync-service start
 # or stop the service
 $ sudo service btsync-service stop
 {% endhighlight %}
+
+### B. For systemd
+
+#### a. Create a service file
+
+Create a file,
+
+{% highlight bash %}
+$ sudo vi /lib/systemd/system/btsync.service
+{% endhighlight %}
+
+and fill it with following content:
+
+```
+[Unit]
+Description=BitTorrent Sync Service
+Wants=network.target
+After=network.target
+
+[Service]
+Group=GROUP_NAME
+User=USER_NAME
+ExecStart=BTSYNC_DIR/btsync --config BTSYNC_CONF_DIR/btsync.conf --nodaemon
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Replace **GROUP\_NAME**, **USER\_NAME**, **BTSYNC\_DIR**, and **BTSYNC\_CONF\_DIR** to yours.
+
+#### b. Enable it
+
+{% highlight bash %}
+$ sudo systemctl enable btsync.service
+{% endhighlight %}
+
+Now you can start it with `sudo systemctl start btsync.service` and stop it with `sudo systemctl stop btsync.service`.
+
+### C. Test
 
 While BitTorrent Sync service is running, you can connect to the web UI through:
 
