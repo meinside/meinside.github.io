@@ -21,25 +21,25 @@ Go needs to be installed on the machine.
 
 Also, **libcap-dev** needs to be installed.
 
-```bash
+{% highlight bash %}
 $ sudo apt-get install libcap-dev
-```
+{% endhighlight %}
 
 ## 1. Install ACME client utilities
 
 Go get the utilities:
 
-```bash
+{% highlight bash %}
 $ go get github.com/hlandau/acme/cmd/acmetool
-```
+{% endhighlight %}
 
 ## 2. Quickstart
 
 Run quickstart command with acmetool:
 
-```bash
+{% highlight bash %}
 $ sudo `which acmetool` quickstart
-```
+{% endhighlight %}
 
 You'll be asked to select or enter several things like validation option, email address, and etc.:
 
@@ -78,7 +78,7 @@ Before requesting certificates, you need to prepare for the challenge conveyance
 
 For that, edit your apache site file by adding following lines:
 
-```
+{% highlight %}
 Alias "/.well-known/acme-challenge/" "/var/run/acme/acme-challenge/"
 <Directory "/var/run/acme/acme-challenge">
 	AllowOverride None
@@ -91,11 +91,11 @@ Alias "/.well-known/acme-challenge/" "/var/run/acme/acme-challenge/"
 	#Order allow,deny
 	#Allow from all
 </Directory>
-```
+{% endhighlight %}
 
 Then the whole file will look like this:
 
-```
+{% highlight %}
 <VirtualHost *:80>
 	ServerAdmin myemail@mydomain.com
 	ServerName subdomain.mydomain.com
@@ -111,16 +111,16 @@ Then the whole file will look like this:
 		Require all granted
 	</Directory>
 </VirtualHost>
-```
+{% endhighlight %}
 
 ### B. Request certificates for your host
 
 Restart the web server and request for your domain.
 
-```bash
+{% highlight bash %}
 $ sudo service apache2 restart
 $ sudo `which acmetool` want subdomain.mydomain.com
-```
+{% endhighlight %}
 
 If nothing goes wrong, you will see your certificate files in **/var/lib/acme/live/subdomain.mydomain.com** directory.
 
@@ -128,14 +128,14 @@ If nothing goes wrong, you will see your certificate files in **/var/lib/acme/li
 
 Duplicate your original apache site file to create a SSL one:
 
-```bash
+{% highlight bash %}
 $ sudo cp /etc/apache2/sites-available/your-site.conf /etc/apache2/sites-available/your-site-ssl.conf
 $ sudo vi /etc/apache2/sites-available/your-site-ssl.conf
-```
+{% endhighlight %}
 
 Add options for generated certificates like this:
 
-```
+{% highlight %}
 <IfModule mod_ssl.c>
 	<VirtualHost *:443>
 		ServerAdmin myemail@mydomain.com
@@ -147,15 +147,15 @@ Add options for generated certificates like this:
 		SSLCertificateKeyFile /var/lib/acme/live/subdomain.mydomain.com/privkey
 	</VirtualHost>
 </IfModule>
-```
+{% endhighlight %}
 
 Then enable your new site:
 
-```bash
+{% highlight bash %}
 $ sudo a2enmod ssl
 $ sudo a2ensite your-site-ssl.conf
 $ sudo service apache2 restart
-```
+{% endhighlight %}
 
 Now you can see your site served over HTTPS!
 
@@ -163,17 +163,17 @@ Now you can see your site served over HTTPS!
 
 Add following lines in your http site file:
 
-```
+{% highlight %}
 RewriteEngine on
 RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [L,QSA,R=permanent]
-```
+{% endhighlight %}
 
 and restart the server:
 
-```bash
+{% highlight bash %}
 $ sudo a2enmod rewrite
 $ sudo service apache2 restart
-```
+{% endhighlight %}
 
 then even when you connect over http, you'll be redirected to https automatically.
 
@@ -181,10 +181,10 @@ then even when you connect over http, you'll be redirected to https automaticall
 
 `acmetool reconcile --batch` will renew the certificate files when needed, so register it in the crontab for running regularly:
 
-```
+{% highlight %}
 # m h  dom mon dow   command
 0 3 * * 6 /path/to/acmetool reconcile --batch
-```
+{% endhighlight %}
 
 then it will run on every Saturday, 03:00.
 

@@ -21,27 +21,27 @@ With this, you can serve your web application securely with HTTPS.
 
 You can install Let's Encrypt by simply cloning its [repository on Github](https://github.com/letsencrypt/letsencrypt).
 
-```bash
+{% highlight bash %}
 $ cd /path/to/somewhere
 $ git clone https://github.com/letsencrypt/letsencrypt
 $ cd letsencrypt
-```
+{% endhighlight %}
 
 ## 2. Create & install certificate
 
 On Raspberry Pi, it will take some time everytime when you run the command.
 
-```bash
+{% highlight bash %}
 $ ./letsencrypt-auto --help all
-```
+{% endhighlight %}
 
 It will show all options and their descriptions.
 
 Then run it again with desired options:
 
-```bash
+{% highlight bash %}
 $ ./letsencrypt-auto -d MY_DOMAIN1 -d MY_DOMAIN2 --apache -m MY_EMAIL --redirect --agree-tos
-```
+{% endhighlight %}
 
 When **--apache** is given, it will configure things up for Apache by itself.
 
@@ -57,16 +57,16 @@ Installed certificates will expire in 3 months due to the policy of Let's Encryp
 
 But we can renew them easily with executing the command again:
 
-```bash
+{% highlight bash %}
 $ ./letsencrypt-auto -d MY_DOMAIN1 -d MY_DOMAIN2 --apache -m MY_EMAIL --redirect --agree-tos --renew-by-default
-```
+{% endhighlight %}
 
 It would be handy if you put this command in your crontab:
 
-```
+{% highlight %}
 # m h  dom mon dow   command
 0 5 1 * * /path/to/somewhere/letsencrypt-auto -d MY_DOMAIN1 -d MY_DOMAIN2 --apache -m MY_EMAIL --redirect --agree-tos --renew-by-default > /dev/null 2>&1
-```
+{% endhighlight %}
 
 Then it will renew certificates on the 1st day of every month, 05:00.
 
