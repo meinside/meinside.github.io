@@ -188,15 +188,17 @@ then even when you connect over http, you'll be redirected to https automaticall
 
 then it will run on every Saturday, 03:00.
 
-## 5. Todo
-
 After renewing the certificates, the web server must be restarted for applying them.
 
-But I have not yet found the way of knowing if the certificates were really renewed or not.
+It seems that acmetool executes **/usr/lib/acme/hooks/reload** automatically
 
-So that's my todo for now.
+for reloading/restarting all known http servers like apache2 or nginx.
 
-## 6. Wrap-up
+(I don't have certificates that are about to expire, so I haven't tested this feature yet)
+
+I will see if it really works like that.
+
+## 5. Wrap-up
 
 Using ACME client utilities is faster and cleaner than using [Let's Encrypt's ACME client](http://blog.meinside.pe.kr/Lets-Encrypt-with-Raspberry-Pi/).
 
