@@ -63,7 +63,7 @@ $ ./letsencrypt-auto -d MY_DOMAIN1 -d MY_DOMAIN2 --apache -m MY_EMAIL --redirect
 
 It would be handy if you put this command in your crontab:
 
-{% highlight %}
+{% highlight bash %}
 # m h  dom mon dow   command
 0 5 1 * * /path/to/somewhere/letsencrypt-auto -d MY_DOMAIN1 -d MY_DOMAIN2 --apache -m MY_EMAIL --redirect --agree-tos --renew-by-default > /dev/null 2>&1
 {% endhighlight %}

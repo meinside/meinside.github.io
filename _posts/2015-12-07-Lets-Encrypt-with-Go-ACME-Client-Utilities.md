@@ -78,7 +78,7 @@ Before requesting certificates, you need to prepare for the challenge conveyance
 
 For that, edit your apache site file by adding following lines:
 
-{% highlight %}
+{% highlight bash %}
 Alias "/.well-known/acme-challenge/" "/var/run/acme/acme-challenge/"
 <Directory "/var/run/acme/acme-challenge">
 	AllowOverride None
@@ -95,7 +95,7 @@ Alias "/.well-known/acme-challenge/" "/var/run/acme/acme-challenge/"
 
 Then the whole file will look like this:
 
-{% highlight %}
+{% highlight bash %}
 <VirtualHost *:80>
 	ServerAdmin myemail@mydomain.com
 	ServerName subdomain.mydomain.com
@@ -135,7 +135,7 @@ $ sudo vi /etc/apache2/sites-available/your-site-ssl.conf
 
 Add options for generated certificates like this:
 
-{% highlight %}
+{% highlight bash %}
 <IfModule mod_ssl.c>
 	<VirtualHost *:443>
 		ServerAdmin myemail@mydomain.com
@@ -163,7 +163,7 @@ Now you can see your site served over HTTPS!
 
 Add following lines in your http site file:
 
-{% highlight %}
+{% highlight bash %}
 RewriteEngine on
 RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [L,QSA,R=permanent]
 {% endhighlight %}
@@ -181,7 +181,7 @@ then even when you connect over http, you'll be redirected to https automaticall
 
 `acmetool reconcile --batch` will renew the certificate files when needed, so register it in the crontab for running regularly:
 
-{% highlight %}
+{% highlight bash %}
 # m h  dom mon dow   command
 0 3 * * 6 /path/to/acmetool reconcile --batch
 {% endhighlight %}
