@@ -159,7 +159,7 @@ $ sudo service apache2 restart
 
 Now you can see your site served over HTTPS!
 
-### D. If you want to redirect all http requests to https
+### D. (optional) If you want to redirect all http requests to https
 
 Add following lines in your http site file:
 
@@ -176,6 +176,8 @@ $ sudo service apache2 restart
 {% endhighlight %}
 
 then even when you connect over http, you'll be redirected to https automatically.
+
+It may make challenge files inaccessible, so please be careful.
 
 ## 4. Renew your certificates automatically
 
