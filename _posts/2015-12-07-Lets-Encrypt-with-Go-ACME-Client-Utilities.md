@@ -38,7 +38,7 @@ $ go get github.com/hlandau/acme/cmd/acmetool
 Run quickstart command with acmetool:
 
 {% highlight bash %}
-$ sudo `which acmetool` quickstart
+$ sudo /path/to/acmetool quickstart
 {% endhighlight %}
 
 You'll be asked to select or enter several things like validation option, email address, and etc.:
@@ -119,7 +119,7 @@ Restart the web server and request for your domain.
 
 {% highlight bash %}
 $ sudo service apache2 restart
-$ sudo `which acmetool` want subdomain.mydomain.com
+$ sudo /path/to/acmetool want subdomain.mydomain.com
 {% endhighlight %}
 
 If nothing goes wrong, you will see your certificate files in **/var/lib/acme/live/subdomain.mydomain.com** directory.
