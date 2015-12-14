@@ -119,13 +119,7 @@ Restart the web server and request for your domain.
 
 {% highlight bash %}
 $ sudo service apache2 restart
-$ sudo /path/to/acmetool want subdomain.mydomain.com
-{% endhighlight %}
-
-You can find the path of acmetool by:
-
-{% highlight bash %}
-$ which acmetool
+$ sudo `which acmetool` want subdomain.mydomain.com
 {% endhighlight %}
 
 If nothing goes wrong, you will see your certificate files in **/var/lib/acme/live/subdomain.mydomain.com** directory.
@@ -187,7 +181,13 @@ It may make challenge files inaccessible, so please be careful.
 
 ## 4. Renew your certificates automatically
 
-`acmetool reconcile --batch` will renew the certificate files when needed, so register it in the crontab for running regularly:
+Firstly, you can find the absolute path of acmetool by:
+
+{% highlight bash %}
+$ which acmetool
+{% endhighlight %}
+
+`/path/to/acmetool reconcile --batch` will renew the certificate files when needed, so register it in the crontab for running regularly:
 
 {% highlight bash %}
 # m h  dom mon dow   command
@@ -196,7 +196,7 @@ It may make challenge files inaccessible, so please be careful.
 
 then it will run on every Saturday, 03:00.
 
-After renewing the certificates, the web server must be restarted for applying them.
+After renewing the certificates, the web server must be reloaded or restarted for applying them.
 
 It seems that acmetool executes **/usr/lib/acme/hooks/reload** automatically
 
