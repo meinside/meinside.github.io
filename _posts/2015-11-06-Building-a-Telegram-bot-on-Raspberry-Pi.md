@@ -124,8 +124,8 @@ func main() {
 			fmt.Printf("SetWebhook was successful: %s\n", *hooked.Description)
 
 			// on success, start webhook server
-			client.StartWebhookServerAndWait(CertFilename, KeyFilename, func(webhook bot.Webhook, success bool, err error) {
-				if success {
+			client.StartWebhookServerAndWait(CertFilename, KeyFilename, func(webhook bot.Webhook, err error) {
+				if err == nil {
 					message := webhook.Message.Text
 					options := map[string]interface{}{
 						"reply_to_message_id": webhook.Message.MessageId,
@@ -270,8 +270,8 @@ func main() {
 			fmt.Printf("SetWebhook was successful: %s\n", *hooked.Description)
 
 			// on success, start webhook server
-			client.StartWebhookServerAndWait(CertFilename, KeyFilename, func(webhook bot.Webhook, success bool, err error) {
-				if success {
+			client.StartWebhookServerAndWait(CertFilename, KeyFilename, func(webhook bot.Webhook, err error) {
+				if err == nil {
 					message := DefaultMessage
 
 					switch *webhook.Message.Text {
