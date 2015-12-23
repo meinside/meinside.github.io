@@ -124,7 +124,7 @@ func main() {
 			fmt.Printf("SetWebhook was successful: %s\n", *hooked.Description)
 
 			// on success, start webhook server
-			client.StartWebhookServerAndWait(CertFilename, KeyFilename, func(webhook bot.Webhook, err error) {
+			client.StartWebhookServerAndWait(CertFilename, KeyFilename, func(webhook bot.Update, err error) {
 				if err == nil {
 					message := webhook.Message.Text
 					options := map[string]interface{}{
@@ -270,7 +270,7 @@ func main() {
 			fmt.Printf("SetWebhook was successful: %s\n", *hooked.Description)
 
 			// on success, start webhook server
-			client.StartWebhookServerAndWait(CertFilename, KeyFilename, func(webhook bot.Webhook, err error) {
+			client.StartWebhookServerAndWait(CertFilename, KeyFilename, func(webhook bot.Update, err error) {
 				if err == nil {
 					message := DefaultMessage
 
@@ -322,6 +322,12 @@ Is the port(80, 88, 443, or 8443) open to public? If not, open it.
 **2015/11/05 18:59:24 http: TLS handshake error from 149.154.167.200:38869: remote error: unknown certificate**
 
 Check your certificate. It could happen if your domain does not match.
+
+### Are you behind a firewall?
+
+If you cannot open ports to public, you can setup a bot to crawl updates periodically.
+
+Use [this sample code](https://github.com/meinside/telegram-bot-go#usage-without-webhook).
 
 ## 7. Wrap-up
 
