@@ -124,13 +124,13 @@ func main() {
 			fmt.Printf("SetWebhook was successful: %s\n", *hooked.Description)
 
 			// on success, start webhook server
-			client.StartWebhookServerAndWait(CertFilename, KeyFilename, func(webhook bot.Update, err error) {
+			client.StartWebhookServerAndWait(CertFilename, KeyFilename, func(b *bot.Bot, webhook bot.Update, err error) {
 				if err == nil {
 					message := webhook.Message.Text
 					options := map[string]interface{}{
 						"reply_to_message_id": webhook.Message.MessageId,
 					}
-					if sent := client.SendMessage(webhook.Message.Chat.Id, message, options); !sent.Ok {
+					if sent := b.SendMessage(webhook.Message.Chat.Id, message, options); !sent.Ok {
 						fmt.Printf("*** failed to send message: %s\n", *sent.Description)
 					}
 				} else {
@@ -270,7 +270,7 @@ func main() {
 			fmt.Printf("SetWebhook was successful: %s\n", *hooked.Description)
 
 			// on success, start webhook server
-			client.StartWebhookServerAndWait(CertFilename, KeyFilename, func(webhook bot.Update, err error) {
+			client.StartWebhookServerAndWait(CertFilename, KeyFilename, func(b *bot.Bot, webhook bot.Update, err error) {
 				if err == nil {
 					message := DefaultMessage
 
@@ -287,7 +287,7 @@ func main() {
 							},
 						},
 					}
-					if sent := client.SendMessage(webhook.Message.Chat.Id, &message, options); !sent.Ok {
+					if sent := b.SendMessage(webhook.Message.Chat.Id, &message, options); !sent.Ok {
 						fmt.Printf("*** failed to send message: %s\n", *sent.Description)
 					}
 				} else {
