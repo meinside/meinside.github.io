@@ -115,10 +115,10 @@ Then the whole file will look like this:
 
 ### B. Request certificates for your host
 
-Restart the web server and request for your domain.
+Stop the web server for a moment and request for your domain.
 
 {% highlight bash %}
-$ sudo service apache2 restart
+$ sudo systemctl stop apache2
 $ sudo `which acmetool` want subdomain.mydomain.com
 {% endhighlight %}
 
@@ -154,7 +154,7 @@ Then enable your new site:
 {% highlight bash %}
 $ sudo a2enmod ssl
 $ sudo a2ensite your-site-ssl.conf
-$ sudo service apache2 restart
+$ sudo systemctl start apache2
 {% endhighlight %}
 
 Now you can see your site served over HTTPS!
@@ -172,7 +172,7 @@ and restart the server:
 
 {% highlight bash %}
 $ sudo a2enmod rewrite
-$ sudo service apache2 restart
+$ sudo systemctl restart apache2
 {% endhighlight %}
 
 then even when you connect over http, you'll be redirected to https automatically.
