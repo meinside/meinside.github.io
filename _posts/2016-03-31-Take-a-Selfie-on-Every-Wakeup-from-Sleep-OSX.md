@@ -14,7 +14,7 @@ Here are the steps I took for it:
 
 ## 0. Install tools that are needed
 
-`imagesnap` is a command line tool which takes a photo with the built-in camera of Macbooks.
+`imagesnap` is a command line tool which takes a photo with the built-in camera of Macbook.
 
 Install it with brew:
 
@@ -88,6 +88,8 @@ $ sudo launchctl load /Library/LaunchDaemons/de.bernhard-baehr.sleepwatcher.plis
 {% endhighlight %}
 
 then `sleepwatcher` starts to monitor the sleep/wake state of your machine.
+
+----
 
 Now your selfie will be captured on every wake up!
 
