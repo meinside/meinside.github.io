@@ -81,6 +81,8 @@ and edit it:
 
 With `-w` option, `/path/to/script.sh` will be executed on wake. (if you need, use `-s` for sleep state)
 
+You can see more options by running `/usr/local/sbin/sleepwatcher` without any option.
+
 Now load this file:
 
 {% highlight bash %}
