@@ -143,6 +143,7 @@ Add options for generated certificates like this:
 
 		DocumentRoot /var/www/html
 
+		SSLEngine on
 		SSLCertificateFile /var/lib/acme/live/subdomain.mydomain.com/fullchain
 		SSLCertificateKeyFile /var/lib/acme/live/subdomain.mydomain.com/privkey
 	</VirtualHost>
