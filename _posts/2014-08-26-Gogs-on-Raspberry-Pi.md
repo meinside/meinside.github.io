@@ -7,7 +7,7 @@ tags:
 published: true
 ---
 
-_(updated: 2015-11-04)_
+_(updated: 2016-04-25)_
 
 [Gogs](http://gogs.io) is a [github](https://github.com)-like Git service built with [Golang](http://golang.org).
 
@@ -287,6 +287,8 @@ If all things are OK, you can login with the username and password which were se
 
 You cannot run Gogs from the shell manually everytime, so let's try to run it as a service.
 
+#### (1) For init.d
+
 Copy an init.d script file from the source codes:
 
 {% highlight bash %}
@@ -320,9 +322,56 @@ $ sudo update-rc.d gogs defaults 98
 
 Gogs can now be manually started with `sudo service gogs start` and stopped with `sudo service gogs stop`.
 
-Well done! :-D
+#### (2) For systemd
+
+Copy an systemd service file from the source codes:
+
+{% highlight bash %}
+$ sudo cp $GOPATH/src/github.com/gogits/gogs/scripts/systemd/gogs.service /lib/systemd/system/gogs.service
+{% endhighlight %}
+
+and edit/add corresponding values,
+
+{% highlight bash %}
+[Unit]
+Description=Gogs (Go Git Service)
+After=syslog.target
+After=network.target
+#After=mysqld.service
+#After=postgresql.service
+#After=memcached.service
+#After=redis.service
+
+[Service]
+# Modify these two values and uncomment them if you have
+# repos with lots of files and get an HTTP error 500 because
+# of that
+###
+#LimitMEMLOCK=infinity
+#LimitNOFILE=65535
+Type=simple
+User=some_user
+Group=some_group
+WORKINGDIR=/home/some_user/gogs
+ExecStart=/home/some_user/gogs/gogs web
+Restart=always
+Environment=USER=some_user HOME=/home/some_user
+
+[Install]
+WantedBy=multi-user.target
+{% endhighlight %}
+
+and make it run automatically on boot time:
+
+{% highlight bash %}
+$ sudo systemctl enable gogs.service
+{% endhighlight %}
+
+Gogs can now be manually started with `sudo systemctl start gogs.serivice` and stopped with `sudo systemctl stop gogs.service`.
 
 ----
+
+Well done! :-D
 
 ## 99. Wrap-up
 
