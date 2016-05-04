@@ -30,8 +30,12 @@
     <link rel="alternate" type="application/rss+xml" title="{{ site.name }} - {{ site.description }}" href="{{ site.baseurl }}/feed.xml" />
 
     <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
-    
+
+    <!-- google analytics -->
     {% include analytics.html %}
+
+    <!-- google adsense -->
+    {% include adsense.html %}
   </head>
 
   <body>
@@ -57,7 +61,12 @@
     <div id="main" role="main" class="container">
       {{ content }}
 
-      {% include bottom-ad.html %}
+      <!-- My Blog - Bottom of Index (Responsive) -->
+      <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-1281003891797012"
+        data-ad-slot="9509862449"
+        data-ad-format="auto"></ins>
     </div>
 
     <div class="wrapper-footer">
