@@ -7,7 +7,7 @@ tags:
 published: true
 ---
 
-[wit.ai](https://wit.ai/) provides API for natural language processing.
+[wit.ai](https://wit.ai/) provides APIs for natural language processing.
 
 It takes a human voice or text and convert it to a structured information for further use.
 
@@ -166,6 +166,8 @@ if message, err := speechToText(w, b.GetFileUrl(*sent.Result)); err == nil {
 {% endhighlight %}
 
 ----
+
+## Wrap-up
 
 wit.ai is not only for speech-to-text but also for a lot more complicated tasks like building a personal assistant using its powerful natural language processing.
 
