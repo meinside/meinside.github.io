@@ -207,6 +207,8 @@ for reloading/restarting all known http servers like apache2 or nginx.
 
 I will see if it really works like that.
 
+**Edited**: Yes, it renewed and reloaded certificates without any problem :-)
+
 ## 5. Wrap-up
 
 Using ACME client utilities is faster and cleaner than using [Let's Encrypt's ACME client](http://blog.meinside.pe.kr/Lets-Encrypt-with-Raspberry-Pi/).
