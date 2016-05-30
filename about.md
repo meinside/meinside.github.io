@@ -4,10 +4,14 @@ title: About
 permalink: /about/
 ---
 
-Love to play with newly released gadgets and technologies.
+## Loves:
+
+* to play with newly released gadgets and technologies,
+* to build things,
+* and games.
 
 ### More about me?
 
 * visit my [homepage](http://meinside.pe.kr)
-* or links at the bottom.
+* or click social icons below.
 
