@@ -1,10 +1,10 @@
 ---
 layout: page
-title: About
+title: About me:
 permalink: /about/
 ---
 
-## Loves:
+## Loves
 
 * to play with newly released gadgets and technologies,
 * to build things,
