@@ -1,16 +1,20 @@
 ---
 layout: page
-title: I,
+title: About me
 permalink: /about/
 ---
 
-## Love
+## I love:
 
 * to play with newly released gadgets and technologies,
 * to build things,
-* and games.
+* and games,
 
-### More about me?
+## and hate:
+
+* almost every other thing.
+
+## want to know more about me?
 
 * visit my [homepage](http://meinside.pe.kr)
 * or click social icons below.
