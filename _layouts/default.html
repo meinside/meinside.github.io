@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
+    {% I18n_Headers %}
+
     <title>{% if page.title %}{{ page.title }} – {% endif %}{{ site.name }} – {{ site.description }}</title>
 
     <!-- favicons -->
@@ -19,8 +21,6 @@
     <link rel='icon' type='image/png' href='{{ site.baseurl }}/images/favicons/favicon-32x32.png' sizes='32x32' />
     <meta name='msapplication-TileColor' content='#2b5797'>
     <meta name='msapplication-TileImage' content='{{ site.baseurl }}/images/favicons/mstile-144x144.png'>
-
-    {% I18n_Headers %}
 
     {% include meta.html %}
 
