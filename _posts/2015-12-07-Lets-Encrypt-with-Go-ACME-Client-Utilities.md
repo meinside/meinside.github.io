@@ -211,7 +211,7 @@ I will see if it really works like that.
 
 ## 5. Wrap-up
 
-Using ACME client utilities is faster and cleaner than using [Let's Encrypt's ACME client](http://blog.meinside.pe.kr/Lets-Encrypt-with-Raspberry-Pi/).
+Using ACME client utilities is faster and cleaner than using [Let's Encrypt's ACME client](/2015/12/04/Lets-Encrypt-with-Raspberry-Pi/).
 
 I can see what is going on inside the box, and can choose what to do and what not to do.
 

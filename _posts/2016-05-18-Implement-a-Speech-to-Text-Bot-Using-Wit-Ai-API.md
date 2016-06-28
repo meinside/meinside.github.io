@@ -32,7 +32,7 @@ $ go get -u github.com/meinside/wit.ai-go
 
 ## 2. Generate your Telegram and wit.ai API tokens
 
-You can create your own Telegram bot with [this guide](/Building-a-Telegram-bot-on-Raspberry-Pi/), and a new wit.ai application on [this page](https://wit.ai/apps/new).
+You can create your own Telegram bot with [this guide](/2015/11/06/Building-a-Telegram-bot-on-Raspberry-Pi/), and a new wit.ai application on [this page](https://wit.ai/apps/new).
 
 ![New wit.ai application](https://cloud.githubusercontent.com/assets/185988/15387890/4df7d75c-1dea-11e6-833b-498b64f6ef89.png)
 
