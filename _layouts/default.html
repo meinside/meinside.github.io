@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>{% if page.title %}{{ page.title }} – {% endif %}{{ site.name }} – {{ site.description }}</title>
+    {% include meta.html %}
 
     <!-- favicons -->
     <link rel='apple-touch-icon' sizes='57x57' href='{{ site.baseurl }}/images/favicons/apple-touch-icon-57x57.png' />
@@ -19,16 +19,6 @@
     <link rel='icon' type='image/png' href='{{ site.baseurl }}/images/favicons/favicon-32x32.png' sizes='32x32' />
     <meta name='msapplication-TileColor' content='#2b5797'>
     <meta name='msapplication-TileImage' content='{{ site.baseurl }}/images/favicons/mstile-144x144.png'>
-
-    <!-- http://polyglot.untra.io/seo/ -->
-    <!--
-    <link rel="alternate" hreflang="{{site.default_lang}}" href="http://blog.meinside.pe.kr{{page.permalink}}" />
-    {% for lang in site.languages %}{% if lang != site.default_lang %}
-    <link rel="alternate" hreflang="{{lang}}" href="http://blog.meinside.pe.kr/{{lang}}{{page.permalink}}" />
-    {% endif %}{% endfor %}
-    -->
-
-    {% include meta.html %}
 
     <!--[if lt IE 9]>
       <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
