@@ -1,7 +1,6 @@
 ---
 layout: post
 title: Raspberry Pi Zero's Low Power Consumption
-lang: en
 tags:
 - raspberry pi
 published: true
