@@ -7,7 +7,7 @@ tags:
 published: true
 ---
 
-_(updated: 2016-04-25)_
+_(updated: 2016-06-30)_
 
 [Gogs](http://gogs.io) is a [github](https://github.com)-like Git service built with [Golang](http://golang.org).
 
@@ -86,7 +86,7 @@ $ go get -u -tags "cert" github.com/gogits/gogs
 
 # build
 $ cd $GOPATH/src/github.com/gogits/gogs
-$ go build
+$ go build -tags "cert"
 {% endhighlight %}
 
 ### b. If you need to enable SQLite3/Redis/Memcache,
