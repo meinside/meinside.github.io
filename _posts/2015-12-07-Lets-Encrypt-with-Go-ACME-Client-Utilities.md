@@ -8,6 +8,9 @@ tags:
 published: true
 ---
 
+_(updated: 2016-07-25)_
+
+
 With [Go ACME client utilities](https://github.com/hlandau/acme), acquiring and renewing certificates from [Let's Encrypt](https://letsencrypt.org/) is a lot easier.
 
 Here are how things go so easily.
@@ -70,7 +73,7 @@ It will be used when Let's Encrypt tries to reach you, so make sure it is the co
 ## 3. Setup your web server
 
 I prefer Apache2, and here's what I did for it:
-(See [this page](https://github.com/hlandau/acme/blob/master/_doc/WSCONFIG.md) for the detail)
+(See [this page](https://hlandau.github.io/acme/userguide#web-server-configuration) for the detail)
 
 ### A. Add alias for challenge files' directory
 
@@ -207,7 +210,68 @@ for reloading/restarting all known http servers like apache2 or nginx.
 
 I will see if it really works like that.
 
-**Edited**: Yes, it renewed and reloaded certificates without any problem :-)
+---
+**Edited**:
+
+Yes, it renewed and reloaded certificates without any problem :-)
+
+---
+**Edited again (after a few months)**:
+
+It suddenly stopped working, so I ran it manually with option: **--xlog.severity=debug**.
+
+Then I saw a log like this:
+
+```
+[INFO] acme.interactor: interaction auto-responder couldn't give a canned response: unknown unique ID, cannot respond: "acme-
+agreement:https://letsencrypt.org/documents/LE-SA-v1.0.1-July-27-2015.pdf"
+
+----------------- Terms of Service Agreement Required --------------
+You must agree to the terms of service at the following URL to continue:
+
+https://letsencrypt.org/documents/LE-SA-v1.0.1-July-27-2015.pdf
+
+Do you agree to the terms of service set out in the above document?
+
+Do you agree to the Terms of Service? [Yn]
+```
+
+I could make it work like before by agreeing to the ToS, but I don't want to do it manually everytime!
+
+According to [this guide](https://hlandau.github.io/acme/userguide#response-files), it can also be automated with a response file:
+
+{% highlight yaml %}
+# This is a example of a response file, used with --response-file.
+# It automatically answers prompts for unattended operation.
+# grep for UniqueID in the source code for prompt names.
+# Pass --response-file to all invocations, not just quickstart.
+# If you don't pass --response-file, it will be looked for at "(state-dir)/conf/responses".
+# You will typically want to use --response-file with --stdio or --batch.
+# For dialogs not requiring a response, but merely acknowledgement, specify true.
+# This file is YAML. Note that JSON is a subset of YAML.
+"acme-enter-email": "myemail@mydomain.com"
+"acme-agreement:https://letsencrypt.org/documents/LE-SA-v1.0.1-July-27-2015.pdf": true
+"acmetool-quickstart-choose-server": https://acme-staging.api.letsencrypt.org/directory
+"acmetool-quickstart-choose-method": redirector
+# This is only used if "acmetool-quickstart-choose-method" is "webroot".
+"acmetool-quickstart-webroot-path": "/var/run/acme/acme-challenge"
+"acmetool-quickstart-complete": true
+"acmetool-quickstart-install-cronjob": true
+"acmetool-quickstart-install-haproxy-script": true
+"acmetool-quickstart-install-redirector-systemd": true
+"acmetool-quickstart-key-type": ecdsa
+"acmetool-quickstart-rsa-key-size": 4096
+"acmetool-quickstart-ecdsa-curve": nistp256
+{% endhighlight %}
+
+and an additional option for the command in crontab:
+
+{% highlight bash %}
+# m h  dom mon dow   command
+0 3 * * 6 /path/to/acmetool reconcile --batch --response-file /path/to/my-response-file.yaml
+{% endhighlight %}
+
+Again, I haven't tested it yet. Just wait and see...
 
 ## 5. Wrap-up
 

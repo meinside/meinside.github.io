@@ -7,7 +7,7 @@ tags:
 published: true
 ---
 
-(Updated: I found a better way [here](/2015/12/07/Lets-Encrypt-with-Go-ACME-Client-Utilities/).)
+_(updated: I found a better way [here](/Lets-Encrypt-with-Go-ACME-Client-Utilities/).)_
 
 [Let's Encrypt](https://letsencrypt.org/) started public beta today.
 
