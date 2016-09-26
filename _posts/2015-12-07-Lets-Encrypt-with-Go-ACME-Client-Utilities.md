@@ -8,7 +8,7 @@ tags:
 published: true
 ---
 
-_(updated: 2016-07-25)_
+_(updated: 2016-09-26)_
 
 
 With [Go ACME client utilities](https://github.com/hlandau/acme), acquiring and renewing certificates from [Let's Encrypt](https://letsencrypt.org/) is a lot easier.
@@ -271,7 +271,27 @@ and an additional option for the command in crontab:
 0 3 * * 6 /path/to/acmetool reconcile --batch --response-file /path/to/my-response-file.yaml
 {% endhighlight %}
 
-Again, I haven't tested it yet. Just wait and see...
+Now it will renew the certificates without user interaction!
+
+---
+**Edited again (after two months...)**:
+
+It stopped working again, and I found out Let's Encrypt was requesting another ToS agreement like this:
+
+```
+----------------- Terms of Service Agreement Required --------------
+You must agree to the terms of service at the following URL to continue:
+
+https://letsencrypt.org/documents/LE-SA-v1.1.1-August-1-2016.pdf
+
+Do you agree to the terms of service set out in the above document?
+
+Do you agree to the Terms of Service? [Yn]
+```
+
+So I had to modify **acme-agreement** part of the response file to make it work again.
+
+Quite annoying...
 
 ## 5. Wrap-up
 
