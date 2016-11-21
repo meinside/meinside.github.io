@@ -13,7 +13,7 @@ I wanted to try it on Raspberry Pi, and here are the steps I have gone through:
 
 ----
 
-## 0. Get souce codes
+## 0. Get source codes
 
 Cloned the [git repository](https://github.com/JuliaLang/julia):
 
