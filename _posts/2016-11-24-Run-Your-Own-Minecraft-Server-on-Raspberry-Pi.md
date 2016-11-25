@@ -184,7 +184,7 @@ Nov 24 18:47:42 raspberry java[17214]: [18:47:42 INFO]: Done (30.277s)! For help
 
 ### Server is outdated
 
-If you cannot connect to the server with 'server is outdated' error, update the .jar file with:
+If you cannot connect to the server with 'server is outdated' error, generate a new .jar file with:
 
 ```bash
 # if the newest version is '1.11'
@@ -194,6 +194,13 @@ $ java -jar BuildTools.jar --rev latest
 ```
 
 If you're not sure, you can find all versions [here](https://hub.spigotmc.org/versions/).
+
+After generation, edit the service file and restart the service:
+
+```bash
+$ sudo systemctl daemon-reload
+$ sudo systemctl restart minecraft-server.service
+```
 
 ## 6. Wrap-up
 
