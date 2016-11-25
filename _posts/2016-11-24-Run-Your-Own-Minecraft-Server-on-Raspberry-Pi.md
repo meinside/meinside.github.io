@@ -189,6 +189,8 @@ If you cannot connect to the server with 'server is outdated' error, update the 
 ```bash
 # if the newest version is '1.11'
 $ java -jar BuildTools.jar --rev 1.11
+# or 'latest'
+$ java -jar BuildTools.jar --rev latest
 ```
 
 ## 6. Wrap-up
