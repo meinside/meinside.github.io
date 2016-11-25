@@ -18,7 +18,7 @@ Running your own server has one downside: *you need to keep your (server) machin
 
 There would be worries about the electric charges, but with Raspberry Pi: a beast with low power consumption, they will not be yours.
 
-Now, here are steps to configure and run the Minecraft server on Raspberry Pi:
+Now, here are steps to configure and run the Minecraft server on Raspberry Pi 3:
 
 ----
 
