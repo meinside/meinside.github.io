@@ -107,11 +107,27 @@ Now your server is up and running!
 
 If you want to stop the server, just type `stop` in the prompt.
 
+When you want to change something, look in to the `server.properties` file.
+
+You can change the port number, game settings, or anything in there.
+
 ## 4. Run the server as a service
 
 You cannot run/stop the server manually every time, so it needs to be managed as a service.
 
-Firstly, create a systemd service file like this:
+Firstly, install mcrcon for controlling the server conveniently:
+
+```bash
+$ git clone  git://git.code.sf.net/p/mcrcon/code mcrcon
+$ cd mcrcon
+$ gcc mcrcon.c -o mcrcon
+```
+
+After that, change **enable-rcon=false** to **enable-rcon=true** in the `server.properties` file.
+
+You should also add **rcon.password=PASSWORD** in it.
+
+Next, create a systemd service file like this:
 
 ```bash
 $ sudo vi /lib/systemd/system/minecraft-server.service
@@ -131,6 +147,7 @@ User=pi
 Group=pi
 WorkingDirectory=/home/pi/minecraft
 ExecStart=/usr/bin/java -jar -Xms512M -Xmx1008M spigot-1.10.2.jar --noconsole
+ExecStop=/path/to/mcrcon -H localhost -P 25575 -p PASSWORD stop
 Restart=always
 RestartSec=5
 Environment=
@@ -139,7 +156,7 @@ Environment=
 WantedBy=multi-user.target
 ```
 
-Replace **User**, **Group**, **WorkingDirectory**, and **ExecStart** values with yours, then all is done.
+Replace **User**, **Group**, **WorkingDirectory**, **ExecStart**, and **ExecStop** values with yours, then all is done.
 
 ### Run the server everytime when your Raspberry Pi is turned on
 
