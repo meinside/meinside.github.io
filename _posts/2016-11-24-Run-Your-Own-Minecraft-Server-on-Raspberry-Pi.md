@@ -193,6 +193,8 @@ $ java -jar BuildTools.jar --rev 1.11
 $ java -jar BuildTools.jar --rev latest
 ```
 
+If you're not sure, you can find all versions [here](https://hub.spigotmc.org/versions/).
+
 ## 6. Wrap-up
 
 Raspberry Pi may not be perfect for running full-sized Minecraft server yet, but it would worth a try :-)
