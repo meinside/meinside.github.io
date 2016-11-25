@@ -180,7 +180,18 @@ Nov 24 18:47:42 raspberry java[17214]: [18:47:42 INFO]: Server permissions file 
 Nov 24 18:47:42 raspberry java[17214]: [18:47:42 INFO]: Done (30.277s)! For help, type "help" or "?"
 ```
 
-## 5. Wrap-up
+## 5. Trouble shooting
+
+### Server is outdated
+
+If you cannot connect to the server with 'server is outdated' error, update the .jar file with:
+
+```bash
+# if the newest version is '1.11'
+$ java -jar BuildTools.jar --rev 1.11
+```
+
+## 6. Wrap-up
 
 Raspberry Pi may not be perfect for running full-sized Minecraft server yet, but it would worth a try :-)
 
