@@ -105,6 +105,8 @@ In a few minutes, you'll get into a prompt like this:
 
 Now your server is up and running!
 
+![Server list in multiplayer menu](https://cloud.githubusercontent.com/assets/185988/20614761/95b755e8-b315-11e6-99c3-389be9ef3a48.png)
+
 If you want to stop the server, just type `stop` in the prompt.
 
 When you want to change something, look in to the `server.properties` file.
