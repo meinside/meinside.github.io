@@ -74,7 +74,7 @@ OverTool.exe -L%LANG% "%OW_FOLDER%" v "%EXTRACTED_FOLDER%"
 
 :: ==== Convert ====
 cd "%EXTRACTED_FOLDER%"
-for /r %%f in (*.wem) do ww2ogg.exe "%%f" --pcb packed_codebooks_aoTuV_603.bin
+for /r %%f in (*.wem) do ww2ogg.exe "%%f" --pcb "%WEM2OGG_FOLDER%\packed_codebooks_aoTuV_603.bin"
 for /r %%f in (*.ogg) do revorb.exe "%%f"
 
 :: ==== Cleanup ====
@@ -98,7 +98,7 @@ cd "%OVERTOOL_FOLDER%"
 OverTool.exe -L%LANG% "%OW_FOLDER%" v "%EXTRACTED_FOLDER%"
 
 cd "%EXTRACTED_FOLDER%"
-for /r %%f in (*.wem) do ww2ogg.exe "%%f" --pcb packed_codebooks_aoTuV_603.bin
+for /r %%f in (*.wem) do ww2ogg.exe "%%f" --pcb "%WEM2OGG_FOLDER%\packed_codebooks_aoTuV_603.bin"
 for /r %%f in (*.ogg) do revorb.exe "%%f"
 
 for /r %%f in (*.wem) do del "%%f"
