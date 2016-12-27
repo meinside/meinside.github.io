@@ -21,6 +21,8 @@ I was learning OpenCV, and wanted to train something by my own hand.
 
 There were hundreds of selfie photos of myself taken by [this way](https://blog.meinside.pe.kr/Take-a-Selfie-on-Every-Wakeup-from-Sleep-OSX/),
 
+![my_faces](https://cloud.githubusercontent.com/assets/185988/21497844/f3d8689c-cc6a-11e6-8149-a0da02869170.png)
+
 so I made up my mind to train my computer to recognize my face.
 
 # 2. Refine training samples
@@ -70,6 +72,8 @@ so I deleted them from **PHOTOS_DIR**.
 
 I downloaded negative facial images from [here](https://www.bioid.com/download?path=BioID-FaceDatabase-V1.2.zip) and placed them in **NEGATIVE_PHOTOS_DIR**.
 (I converted them into .jpg format!)
+
+![negative_faces](https://cloud.githubusercontent.com/assets/185988/21497843/f3b56766-cc6a-11e6-8c97-18c1a8a9b9c7.png)
 
 With the negative images, following script generates `positive.txt` and `negative.txt`:
 
