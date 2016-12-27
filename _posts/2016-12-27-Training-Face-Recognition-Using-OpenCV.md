@@ -152,10 +152,12 @@ Finally, with generated `training.vec` and `negative.txt`, I ran:
 
 ```bash
 $ mkdir -f result
-$ opencv_traincascade -data result -vec training.vec -bg negative.txt -numPos 300 -numNeg 1500 -featureType HAAR -mode CORE -numStages 12 ↳-maxFalseAlarmRate 0.5 -minHitRate 0.995
+$ opencv_traincascade -data result -vec training.vec -bg negative.txt -numPos 300 -numNeg 1500 -featureType HAAR -mode CORE -numStages 12 -maxFalseAlarmRate 0.5 -minHitRate 0.995
 ```
 
-Parameters may vary, but fortunately there were no errors when running it.
+(Parameters may vary.)
+
+Fortunately, there were no errors while running it.
 
 I could find the final result: `cascade.xml` in **result** directory.
 
@@ -214,9 +216,9 @@ for filepath in filepaths:
 print 'Total ' + str(num_detected) + '/' + str(len(filepaths)) + ' faces were marked in directory: ' + CHECKED_PHOTOS_DIR 
 ```
 
-This script draws rectangles on faces recognized by the newly-generated cascade file(`result/cascade.xml`).
+This script now draws rectangles on faces recognized by the newly-generated cascade file(`result/cascade.xml`).
 
-Time to check the photos in **CHECKED_PHOTOS_DIR**!
+Time to check the marked photos in **CHECKED_PHOTOS_DIR**!
 
 # 8. The result is...
 
