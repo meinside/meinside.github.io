@@ -26,7 +26,7 @@ After doing them, it worked as advertised. Cool!
 
 # 1. Plug L800 into Raspberry Pi
 
-I booted my Raspberry Pi up and plugged L800.
+I booted my Pi Zero up and plugged L800.
 
 With `lsusb`, I could see it in the list:
 
@@ -114,6 +114,20 @@ $ curl ifconfig.co
 ![5_ifconfig_and_ip](https://cloud.githubusercontent.com/assets/185988/21514240/4e753438-cd06-11e6-86b1-1eac4226a3ac.png)
 
 That is, with L800 only, my Raspberry Pi is connected to the world!
+
+----
+
+# 998. One problem
+
+I had to connect Alacatel L800 to a powered USB hub.
+
+My Raspberry Pi Zero did not work properly without it.
+
+It worked for sometime, but stopped after couple of minutes.
+
+Maybe L800 consumes more power than the Raspberry Pi Zero provides.
+
+I haven't tested with Raspberry Pi 3 yet. *Will test and add the result here.*
 
 ----
 
