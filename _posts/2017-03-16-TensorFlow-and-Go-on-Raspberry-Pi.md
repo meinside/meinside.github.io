@@ -167,6 +167,8 @@ In the downloaded directory, I replaced `lib64` to `lib` in the files with:
 
 ```bash
 $ cd ${GOPATH}/src/github.com/tensorflow/tensorflow
+#$ git fetch --all --tags --prune
+#$ git co tags/v1.0.0
 $ grep -Rl 'lib64' | xargs sed -i 's/lib64/lib/g'
 ```
 
