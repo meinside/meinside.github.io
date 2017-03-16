@@ -231,7 +231,7 @@ All done. Time to test!
 
 # 4. Go Test
 
-I ran test for validating the installation:
+I ran a test for validating the installation:
 
 ```bash
 $ go test github.com/tensorflow/tensorflow/tensorflow/go
