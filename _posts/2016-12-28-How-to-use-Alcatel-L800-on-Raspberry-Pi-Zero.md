@@ -22,11 +22,11 @@ As most guides on the internet say, I installed 'Web Connection' and connected t
 
 There were a couple of things to do for me, like registering the dial number and APN address.
 
-After doing them, it worked as advertised. Cool!
+After doing them, it just worked as advertised. Cool!
 
 # 1. Plug L800 into Raspberry Pi
 
-I booted my Pi Zero up and plugged L800.
+I booted my Pi Zero up and plugged L800 in.
 
 With `lsusb`, I could see it in the list:
 
@@ -50,30 +50,19 @@ I needed to use it as USB modem, not USB disk, so I had to use `usb_modeswitch`:
 $ sudo apt-get install usb-modeswitch
 ```
 
-After installing, I had to edit `/etc/usb_modeswitch.conf`:
+After installing, I had to create a file named `/etc/udev/rules.d/41-usb_modeswitch.rules`:
 
 ```bash
-$ sudo vi /etc/usb_modeswitch.conf
+$ sudo vi /etc/udev/rules.d/41-usb_modeswitch.rules
 ```
 
-and add following lines:
+and add following line:
 
 ```
-# for Alcatel L800
-DefaultVendor=0x1bbb
-DefaultProduct=0xf000
-
-TargetVendor=0x1bbb
-TargetProduct=0x0017
-
-MessageContent="55534243123456788000000080000606f50402527000000000000000000000"
+ATTRS{idVendor}=="1bbb", ATTRS{idProduct}=="f000", RUN+="/usr/sbin/usb_modeswitch -v 1bbb -p f000 -P 0017 -M 55534243123456788000000080000606f50402527000000000000000000000"
 ```
 
-It was for switching L800's USB mode from **disk** to **modem**.
-
-After that, my `/etc/usb_modeswitch.conf` looked like this:
-
-![2_usb_modeswitch](https://cloud.githubusercontent.com/assets/185988/21514237/46cc9abe-cd06-11e6-83d5-fcc6cf27baad.png)
+With this file, L800's USB mode will be switched automatically from **disk** to **modem** on every boot.
 
 # 3. Edit network interface
 
@@ -105,10 +94,12 @@ $ /sbin/ifconfig
 
 ![4_ifconfig](https://cloud.githubusercontent.com/assets/185988/21514239/4bb75e88-cd06-11e6-97cc-71ac8d5e373b.png)
 
-After removing the WiFi dongle, I could see an unfamiliar IP assigned to my Raspberry Pi:
+After removing the WiFi dongle, I could see an *unfamiliar IP* assigned to my Raspberry Pi:
 
 ```bash
 $ curl ifconfig.co
+# or, test on usb0
+$ curl ifconfig.co --interface usb0
 ```
 
 ![5_ifconfig_and_ip](https://cloud.githubusercontent.com/assets/185988/21514240/4e753438-cd06-11e6-86b1-1eac4226a3ac.png)
@@ -117,25 +108,36 @@ That is, with L800 only, my Raspberry Pi is connected to the world!
 
 ----
 
-# 998. One problem
+# 998. Trouble shooting
 
-I had to connect Alacatel L800 to a powered USB hub.
+## A. Not enough power
 
-My Raspberry Pi Zero did not work properly without it.
+Without a powered USB hub, my Raspberry Pi Zero did not work properly.
 
 It worked for sometime, but stopped after couple of minutes.
 
 Maybe L800 consumes more power than the Raspberry Pi Zero provides.
 
-I haven't tested with Raspberry Pi 3 yet. *Will test and add the result here.*
+I have also tested on Raspberry Pi 3, and **it worked great** without any external power or hub.
+
+## B. usb0 is visible, but not working
+
+Try turning it off and on with:
+
+```bash
+$ sudo ifdown usb0
+$ sudo ifup usb0
+```
+
+and test again.
 
 ----
 
 # 999. Wrap-up
 
-With Raspberry Pi, LTE/3G data connection is really useful.
+LTE/3G data connection is really useful with Raspberry Pi.
 
-It can be placed outside of the house, or even in harsh environments as long as its mobile data connection is established.
+It can communicate with you outside of the building, or even in harsh environments as long as its mobile data connection is established.
 
 There can be so many ways of making the most use of it!
 
