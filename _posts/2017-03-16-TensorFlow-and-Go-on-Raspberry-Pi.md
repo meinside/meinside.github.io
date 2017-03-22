@@ -219,6 +219,8 @@ My Pi became unresponsive many times, but I kept it going on.
 
 After a long time of struggle, (it took over 7 days for me...)
 
+**Edit**: On a dedicated build machine, it took about 3 to 4 days.
+
 I finally got `libtensorflow.so` in `bazel-bin/tensorflow/`.
 
 So I copied it into `/usr/local/lib/`:
@@ -249,6 +251,12 @@ ok      github.com/tensorflow/tensorflow/tensorflow/go  0.688s
 ```
 
 Ok, it works!
+
+**Edit**: As [this instruction](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/go#generate-wrapper-functions-for-ops<Paste>) says, I had to regenerate operations before the test:
+
+```bash
+$ go generate github.com/tensorflow/tensorflow/tensorflow/go/op
+```
 
 # 5. Further Test
 
