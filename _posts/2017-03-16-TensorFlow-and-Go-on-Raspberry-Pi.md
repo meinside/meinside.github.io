@@ -252,7 +252,7 @@ ok      github.com/tensorflow/tensorflow/tensorflow/go  0.688s
 
 Ok, it works!
 
-**Edit**: As [this instruction](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/go#generate-wrapper-functions-for-ops<Paste>) says, I had to regenerate operations before the test:
+**Edit**: As [this instruction](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/go#generate-wrapper-functions-for-ops) says, I had to regenerate operations before the test:
 
 ```bash
 $ go generate github.com/tensorflow/tensorflow/tensorflow/go/op
