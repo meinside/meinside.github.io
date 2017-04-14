@@ -22,7 +22,7 @@ With following content, you too, will be able to send Pushbullet notifications o
 
 ## 0. Prerequisite
 
-[Ruby](http://www.ruby-lang.org/) needs to be installed on the machine. If it isn't yet, you can get it done with [this script](https://raw.githubusercontent.com/meinside/rpi-configs/master/bin/prep_ruby.sh).
+[Ruby](http://www.ruby-lang.org/) needs to be installed on the machine. If it isn't yet, you can get it done with [this script](https://raw.githubusercontent.com/meinside/rpi-configs/master/bin/install_ruby.sh).
 
 ## 1. Install pushbullet-ruby gem
 

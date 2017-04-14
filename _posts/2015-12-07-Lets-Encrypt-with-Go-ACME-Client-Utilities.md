@@ -20,7 +20,7 @@ Here are how things go so easily.
 ## 0. Prerequisite
 
 Go needs to be installed on the machine.
-(If you don't know how on Raspberry Pi, use [this script](https://github.com/meinside/rpi-configs/blob/master/bin/prep_go.sh))
+(If you don't know how on Raspberry Pi, use [this script](https://github.com/meinside/rpi-configs/blob/master/bin/install_go.sh))
 
 Also, **libcap-dev** needs to be installed.
 

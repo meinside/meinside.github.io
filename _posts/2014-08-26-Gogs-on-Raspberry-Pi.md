@@ -25,7 +25,7 @@ You've already got one, haven't you? :-)
 
 ### B. Install Golang
 
-You can install golang from source code with [this script](https://github.com/meinside/rpi-configs/blob/master/bin/prep_go.sh).
+You can install golang from source code with [this script](https://github.com/meinside/rpi-configs/blob/master/bin/install_go.sh).
 
 It checks out latest code from the [repository](https://code.google.com/p/go/), build, and install binaries for Raspberry Pi.
 

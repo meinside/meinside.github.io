@@ -112,7 +112,7 @@ julia>
 
 ## 5. Wrap-up
 
-I put whole processes into a [bash script here](https://github.com/meinside/rpi-configs/blob/master/bin/prep_julia.sh)(not tested yet :-O).
+I put whole processes into a [bash script here](https://github.com/meinside/rpi-configs/blob/master/bin/install_julia.sh)(not tested yet :-O).
 
 Though it's buildable and excutable on Raspberry Pi, I'm still not sure if Julia runs well on it.
 
