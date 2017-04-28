@@ -168,7 +168,7 @@ In the downloaded directory, I replaced `lib64` to `lib` in the files with:
 ```bash
 $ cd ${GOPATH}/src/github.com/tensorflow/tensorflow
 #$ git fetch --all --tags --prune
-#$ git co tags/v1.0.0
+#$ git checkout tags/v1.1.0
 $ grep -Rl 'lib64' | xargs sed -i 's/lib64/lib/g'
 ```
 
@@ -221,6 +221,8 @@ After a long time of struggle, (it took over 7 days for me...)
 
 **Edit**: On a dedicated build machine, it took about 3 to 4 days.
 
+**Edit again**: I shut down several services before building, (BitTorrent Sync, PostgreSQL, ...) then it took about only 12 hours for [v1.1.0](https://github.com/tensorflow/tensorflow/releases/tag/v1.1.0). Much faster!
+
 I finally got `libtensorflow.so` in `bazel-bin/tensorflow/`.
 
 So I copied it into `/usr/local/lib/`:
@@ -241,13 +243,10 @@ I ran a test for validating the installation:
 $ go test github.com/tensorflow/tensorflow/tensorflow/go
 ```
 
+then I could see:
+
 ```
-2017-03-15 07:46:27.000618: I tensorflow/cc/saved_model/loader.cc:195] Loading SavedModel from: ../cc/saved_model/testdata/half_plus_two/00000123
-2017-03-15 07:46:27.151865: I tensorflow/cc/saved_model/loader.cc:114] Restoring SavedModel bundle.
-2017-03-15 07:46:27.162955: I tensorflow/cc/saved_model/loader.cc:149] Running LegacyInitOp on SavedModel bundle.
-2017-03-15 07:46:27.166851: I tensorflow/cc/saved_model/loader.cc:239] Loading SavedModel: success. Took 166107 microseconds.
-PASS
-ok      github.com/tensorflow/tensorflow/tensorflow/go  0.688s
+ok      github.com/tensorflow/tensorflow/tensorflow/go  2.084s
 ```
 
 Ok, it works!
