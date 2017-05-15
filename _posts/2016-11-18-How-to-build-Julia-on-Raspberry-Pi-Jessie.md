@@ -7,6 +7,8 @@ tags:
 published: true
 ---
 
+(update 2017-05-15: Julia is [now available as a raspbian package!](https://www.raspberrypi.org/blog/julia-language-raspberry-pi/))
+
 [Julia](http://julialang.org/) is a programming language especially for technical computing, and is often said to be 3x to 5x times faster than [R](https://www.r-project.org/).
 
 I wanted to try it on Raspberry Pi, and here are the steps I have gone through:
