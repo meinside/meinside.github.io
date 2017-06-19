@@ -8,6 +8,8 @@ tags:
 published: true
 ---
 
+**Updated on 2017-06-19, for Tensorflow 1.2.0**
+
 [TensorFlow 1.0 now supports Golang](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/go), so I gave it a try on Raspberry Pi:
 
 ----
@@ -22,9 +24,9 @@ All steps were taken on my **Raspberry Pi 3 B** model with:
 
 and software versions were:
 
-* tensorflow 1.0.0
+* tensorflow 1.2.0
 * protobuf 3.1.0
-* bazel 0.4.4
+* bazel 0.5.1
 
 Before the beginning, I had to install dependencies:
 
@@ -85,9 +87,7 @@ I could see the version of installed protobuf like:
 
 ```bash
 $ protoc --version
-```
 
-```
 libprotoc 3.1.0
 ```
 
@@ -98,10 +98,11 @@ libprotoc 3.1.0
 I got the latest release from [here](https://github.com/bazelbuild/bazel/releases), and unzipped it:
 
 ```bash
-$ unzip -d bazel bazel-0.4.4-dist.zip
+$ wget https://github.com/bazelbuild/bazel/releases/download/0.5.1/bazel-0.5.1-dist.zip
+$ unzip -d bazel bazel-0.5.1-dist.zip
 ```
 
-## b. edit files
+## b. edit bootstrap files
 
 In the unzipped directory, I opened the `scripts/bootstrap/compile.sh` file:
 
@@ -137,7 +138,7 @@ $ chmod u+w ./* -R
 $ ./compile.sh
 ```
 
-The compilation took about 30 minutes.
+This compilation took about an hour.
 
 ## d. install
 
@@ -163,16 +164,16 @@ $ go get -d github.com/tensorflow/tensorflow/tensorflow/go
 
 ## b. edit files
 
-In the downloaded directory, I replaced `lib64` to `lib` in the files with:
+In the downloaded directory, I checked out the latest tag and replaced `lib64` to `lib` in the files with:
 
 ```bash
 $ cd ${GOPATH}/src/github.com/tensorflow/tensorflow
-#$ git fetch --all --tags --prune
-#$ git checkout tags/v1.1.0
+$ git fetch --all --tags --prune
+$ git checkout tags/v1.2.0
 $ grep -Rl 'lib64' | xargs sed -i 's/lib64/lib/g'
 ```
 
-Raspberry Pi still runs on 32bit OS, so it needed to be changed like this.
+Raspberry Pi still runs on 32bit OS, so they had to be changed like this.
 
 After that, I commented `#define IS_MOBILE_PLATFORM` in `tensorflow/core/platform/platform.h`:
 
@@ -182,7 +183,7 @@ After that, I commented `#define IS_MOBILE_PLATFORM` in `tensorflow/core/platfor
 //#define IS_MOBILE_PLATFORM	// <= commented this line
 ```
 
-If it is not commented out, bazel will build for mobile platforms like iOS or Android, not Raspberry Pi.
+If it is not commented out, bazel will build for mobile platforms like `iOS` or `Android`, not Raspberry Pi.
 
 To do this easily, just run:
 
@@ -217,13 +218,9 @@ My Pi became unresponsive many times, but I kept it going on.
 
 ...
 
-After a long time of struggle, (it took over 7 days for me...)
+After a long time of struggle, (it took nearly 7 hours for me!)
 
-**Edit**: On a dedicated build machine, it took about 3 to 4 days.
-
-**Edit again**: I shut down several services before building, (BitTorrent Sync, PostgreSQL, ...) then it took about only 12 hours for [v1.1.0](https://github.com/tensorflow/tensorflow/releases/tag/v1.1.0). Much faster!
-
-I finally got `libtensorflow.so` in `bazel-bin/tensorflow/`.
+I finally got `libtensorflow.so` compiled in `bazel-bin/tensorflow/`.
 
 So I copied it into `/usr/local/lib/`:
 
@@ -290,6 +287,48 @@ The answer is 42
 See the result?
 
 From now on, I can write tensorflow applications in go, on Raspberry Pi! :-)
+
+----
+
+# 98. Trouble shooting
+
+## Build failure due to a problem with Eigen
+
+With [Tensorflow 1.2.0](https://github.com/tensorflow/tensorflow/releases/tag/v1.2.0), I encountered [this issue](https://github.com/tensorflow/tensorflow/issues/9697) while building.
+
+To work around this problem, I edited `tensorflow/workspace.bzl` from:
+
+```
+native.new_http_archive(
+	name = "eigen_archive",
+	urls = [
+		"http://mirror.bazel.build/bitbucket.org/eigen/eigen/get/f3a22f35b044.tar.gz",
+		"https://bitbucket.org/eigen/eigen/get/f3a22f35b044.tar.gz",
+	],
+	sha256 = "ca7beac153d4059c02c8fc59816c82d54ea47fe58365e8aded4082ded0b820c4",
+	strip_prefix = "eigen-eigen-f3a22f35b044",
+	build_file = str(Label("//third_party:eigen.BUILD")),
+)
+```
+
+to:
+
+```
+native.new_http_archive(
+	name = "eigen_archive",
+	urls = [
+		"http://mirror.bazel.build/bitbucket.org/eigen/eigen/get/d781c1de9834.tar.gz",
+		"https://bitbucket.org/eigen/eigen/get/d781c1de9834.tar.gz",
+	],
+	sha256 = "a34b208da6ec18fa8da963369e166e4a368612c14d956dd2f9d7072904675d9b",
+	strip_prefix = "eigen-eigen-d781c1de9834",
+	build_file = str(Label("//third_party:eigen.BUILD")),
+)
+```
+
+then I could build it without further problems.
+
+I hope it would be fixed on upcoming releases.
 
 ----
 
