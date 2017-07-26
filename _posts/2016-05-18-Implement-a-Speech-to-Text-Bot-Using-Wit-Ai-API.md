@@ -159,7 +159,7 @@ if message, err := speechToText(w, b.GetFileUrl(*sent.Result)); err == nil {
 	if len(message) <= 0 {
 		message = "Failed to analyze your voice."
 	}
-	if sent := b.SendMessage(u.Message.Chat.Id, &message, map[string]interface{}{}); !sent.Ok {
+	if sent := b.SendMessage(u.Message.Chat.Id, message, map[string]interface{}{}); !sent.Ok {
 		log.Printf("*** failed to send message: %s\n", *sent.Description)
 	}
 }

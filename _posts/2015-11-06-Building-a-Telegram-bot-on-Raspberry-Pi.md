@@ -117,7 +117,7 @@ func main() {
 
 	// get info about this bot
 	if me := client.GetMe(); me.Ok {
-		fmt.Printf("Bot information: @%s (%s)\n", *me.Result.Username, *me.Result.FirstName)
+		fmt.Printf("Bot information: @%s (%s)\n", *me.Result.Username, me.Result.FirstName)
 
 		// set webhook url
 		if hooked := client.SetWebhook(WebhookHost, WebhookPort, CertFilename); hooked.Ok {
@@ -130,7 +130,7 @@ func main() {
 					options := map[string]interface{}{
 						"reply_to_message_id": webhook.Message.MessageId,
 					}
-					if sent := b.SendMessage(webhook.Message.Chat.Id, message, options); !sent.Ok {
+					if sent := b.SendMessage(webhook.Message.Chat.Id, *message, options); !sent.Ok {
 						fmt.Printf("*** failed to send message: %s\n", *sent.Description)
 					}
 				} else {
@@ -263,7 +263,7 @@ func main() {
 
 	// get info about this bot
 	if me := client.GetMe(); me.Ok {
-		fmt.Printf("Bot information: @%s (%s)\n", *me.Result.Username, *me.Result.FirstName)
+		fmt.Printf("Bot information: @%s (%s)\n", *me.Result.Username, me.Result.FirstName)
 
 		// set webhook url
 		if hooked := client.SetWebhook(WebhookHost, WebhookPort, CertFilename); hooked.Ok {
@@ -282,12 +282,19 @@ func main() {
 					}
 					options := map[string]interface{}{
 						"reply_markup": bot.ReplyKeyboardMarkup{
-							Keyboard: [][]string{
-								[]string{CommandUptime, CommandDate},
+							Keyboard: [][]bot.KeyboardButton{
+								[]bot.KeyboardButton{
+									bot.KeyboardButton{
+										Text: CommandUptime,
+									},
+									bot.KeyboardButton{
+										Text: CommandDate,
+									},
+								},
 							},
 						},
 					}
-					if sent := b.SendMessage(webhook.Message.Chat.Id, &message, options); !sent.Ok {
+					if sent := b.SendMessage(webhook.Message.Chat.Id, message, options); !sent.Ok {
 						fmt.Printf("*** failed to send message: %s\n", *sent.Description)
 					}
 				} else {
