@@ -1,11 +1,11 @@
 ---
 layout: post
-title: TensorFlow and Go on Raspberry Pi
+title: TensorFlow and Go on Raspberry Pi (Outdated)
 tags:
 - raspberry pi
 - golang
 - tensorflow
-published: false
+published: true
 ---
 
 **Updated on 2017-06-19, for Tensorflow 1.2.0**
