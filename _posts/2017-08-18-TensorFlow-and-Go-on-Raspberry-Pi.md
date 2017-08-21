@@ -5,16 +5,14 @@ tags:
 - raspberry pi
 - golang
 - tensorflow
-published: false
+published: true
 ---
 
-**Updated on 2017-06-19, for Tensorflow 1.2.0**
-
-[TensorFlow 1.0 now supports Golang](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/go), so I gave it a try on Raspberry Pi:
+This is a guide which I ran through for building `libtensorflow` on Raspberry Pi.
 
 ----
 
-# 0. Used Hardware and Software Versions
+# 0. Used Hardwares and Softwares
 
 All steps were taken on my **Raspberry Pi 3 B** model with:
 
@@ -24,19 +22,12 @@ All steps were taken on my **Raspberry Pi 3 B** model with:
 
 and software versions were:
 
-* raspbian (jessie)
-* tensorflow 1.2.0
-* protobuf 3.1.0
-* bazel 0.5.1
+* Raspbian (Stretch) / gcc 6.3.0
+* Tensorflow 1.3.0
+* Protobuf 3.1.0
+* Bazel 0.5.1
 
 Before the beginning, I had to install dependencies:
-
-### for python
-
-```bash
-$ sudo apt-get install python-pip python-numpy swig python-dev
-$ sudo pip install wheel
-```
 
 ### for protobuf
 
@@ -50,45 +41,37 @@ $ sudo apt-get install autoconf automake libtool
 $ sudo apt-get install pkg-config zip g++ zlib1g-dev unzip oracle-java8-jdk
 ```
 
-### for compiler optimization and avoiding possible errors
-
-It is said that both protobuf and tensorflow should be built with **gcc-4.8**, so... :
-
-```bash
-$ sudo apt-get install gcc-4.8 g++-4.8
-$ sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 100
-$ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 100
-```
-
 ----
 
 # 1. Install Protobuf
 
-I cloned the repository:
+I cloned the protobuf's repository:
 
 ```bash
 $ git clone https://github.com/google/protobuf.git
 ```
 
-and built it:
+and started building:
 
 ```bash
 $ cd protobuf
 $ git checkout v3.1.0
 $ ./autogen.sh
 $ ./configure
-$ make CXX=g++-4.8 -j 4
+$ make -j 4
 $ sudo make install
 $ sudo ldconfig
 ```
 
-The build took less than 1 hour to finish.
+It took less than an hour to finish.
 
-I could see the version of installed protobuf like:
+I could see the version of installed protobuf with:
 
 ```bash
 $ protoc --version
+```
 
+```
 libprotoc 3.1.0
 ```
 
@@ -96,7 +79,7 @@ libprotoc 3.1.0
 
 ## a. download
 
-I got the latest release from [here](https://github.com/bazelbuild/bazel/releases), and unzipped it:
+I got a zip file of bazel from [here](https://github.com/bazelbuild/bazel/releases) and unzipped it:
 
 ```bash
 $ wget https://github.com/bazelbuild/bazel/releases/download/0.5.1/bazel-0.5.1-dist.zip
@@ -139,7 +122,7 @@ $ chmod u+w ./* -R
 $ ./compile.sh
 ```
 
-This compilation took about an hour.
+It also took about an hour.
 
 ## d. install
 
@@ -170,13 +153,13 @@ In the downloaded directory, I checked out the latest tag and replaced `lib64` t
 ```bash
 $ cd ${GOPATH}/src/github.com/tensorflow/tensorflow
 $ git fetch --all --tags --prune
-$ git checkout tags/v1.2.0
+$ git checkout tags/v1.3.0
 $ grep -Rl 'lib64' | xargs sed -i 's/lib64/lib/g'
 ```
 
 Raspberry Pi still runs on 32bit OS, so they had to be changed like this.
 
-After that, I commented `#define IS_MOBILE_PLATFORM` in `tensorflow/core/platform/platform.h`:
+After that, I commented `#define IS_MOBILE_PLATFORM` out in `tensorflow/core/platform/platform.h`:
 
 ```c
 // Since there's no macro for the Raspberry Pi, assume we're on a mobile
@@ -192,32 +175,25 @@ To do this easily, just run:
 $ sed -i "s|#define IS_MOBILE_PLATFORM|//#define IS_MOBILE_PLATFORM|g" tensorflow/core/platform/platform.h
 ```
 
-Finally, it was time to build tensorflow.
+Finally, it was time to configure and build tensorflow.
 
-## c. build and install
-
-Started building `libtensorflow.so` with:
+## c. configure and build
 
 ```bash
 $ ./configure
-# (=> I answered to some questions here)
+```
+
+I had to answer to some questions here.
+
+Then I started building `libtensorflow.so` with:
+
+```bash
 $ bazel build -c opt --copt="-mfpu=neon-vfpv4" --copt="-funsafe-math-optimizations" --copt="-ftree-vectorize" --copt="-fomit-frame-pointer" --jobs 1 --local_resources 1024,1.0,1.0 --verbose_failures --genrule_strategy=standalone --spawn_strategy=standalone //tensorflow:libtensorflow.so
 ```
 
-I could tweak the **--local_resources** option as [this bazel manual](https://bazel.build/versions/master/docs/bazel-user-manual.html#flag--local_resources),
+My Pi became unresponsive many times during this process, but I kept it going on.
 
-but if set too agressively, bazel could freeze or even crash with error messages like:
-
-```
-Process exited with status 4.
-gcc: internal compiler error: Killed (program cc1plus)
-```
-
-If this happens, just restart the build. It will resume from the point where it crashed.
-
-My Pi became unresponsive many times, but I kept it going on.
-
-...
+## d. install
 
 After a long time of struggle, (it took nearly 7 hours for me!)
 
@@ -244,7 +220,7 @@ $ go test github.com/tensorflow/tensorflow/tensorflow/go
 then I could see:
 
 ```
-ok      github.com/tensorflow/tensorflow/tensorflow/go  2.084s
+ok      github.com/tensorflow/tensorflow/tensorflow/go  0.350s
 ```
 
 Ok, it works!
@@ -257,32 +233,32 @@ $ go generate github.com/tensorflow/tensorflow/tensorflow/go/op
 
 # 5. Further Test
 
-Wanted to see a simple go program running, so I wrote:
+I wanted to see a simple go program running, so I wrote this code:
 
 ```go
 // sample.go
 package main
 
 import (
-    "fmt"
+	"fmt"
 
-    tf "github.com/tensorflow/tensorflow/tensorflow/go"
+	tf "github.com/tensorflow/tensorflow/tensorflow/go"
 )
 
 // Sorry - I don't have a good example yet :-P
 func main() {
-    tensor, _ := tf.NewTensor(int64(42))
+	tensor, _ := tf.NewTensor(int64(42))
 
-    if v, ok := tensor.Value().(int64); ok {
-        fmt.Printf("The answer is %v\n", v)
-    }
+	if v, ok := tensor.Value().(int64); ok {
+		fmt.Printf("The answer to the life, universe, and everything: %v\n", v)
+	}
 }
 ```
 
 and ran it with `go run sample.go`:
 
 ```
-The answer is 42
+The answer to the life, universe, and everything: 42
 ```
 
 See the result?
@@ -295,9 +271,9 @@ From now on, I can write tensorflow applications in go, on Raspberry Pi! :-)
 
 ## Build failure due to a problem with Eigen
 
-With [Tensorflow 1.2.0](https://github.com/tensorflow/tensorflow/releases/tag/v1.2.0), I encountered [this issue](https://github.com/tensorflow/tensorflow/issues/9697) while building.
+Back in the day with [Tensorflow 1.2.0](https://github.com/tensorflow/tensorflow/releases/tag/v1.2.0), I encountered [this issue](https://github.com/tensorflow/tensorflow/issues/9697) while building, but it's still not fixed yet in [1.3.0](https://github.com/tensorflow/tensorflow/releases/tag/v1.3.0).
 
-To work around this problem, I edited `tensorflow/workspace.bzl` from:
+So I had to work around this problem again by editing `tensorflow/workspace.bzl` from:
 
 ```
 native.new_http_archive(
@@ -327,18 +303,28 @@ native.new_http_archive(
 )
 ```
 
-then I could build it without further problems.
+and starting again from the beginning:
 
-I hope it would be fixed on upcoming releases.
+```bash
+$ bazel clean
+$ ./configure
+$ bazel build -c opt --copt="-mfpu=neon-vfpv4" --copt="-funsafe-math-optimizations" --copt="-ftree-vectorize" --copt="-fomit-frame-pointer" --jobs 1 --local_resources 1024,1.0,1.0 --verbose_failures --genrule_strategy=standalone --spawn_strategy=standalone //tensorflow:libtensorflow.so
+
+...
+```
+
+Then I could build it without further problems.
+
+I hope it would be fixed on future releases.
 
 ----
 
 # 99. Wrap-up
 
 Installing TensorFlow on Raspberry Pi is not easy yet.
-([There's a kind project](https://github.com/samjabrahams/tensorflow-on-raspberry-pi) which makes it super easy though!)
+(There's [a kind project](https://github.com/samjabrahams/tensorflow-on-raspberry-pi) which makes it super easy though!)
 
-Building libtensorflow.so is a lot more difficult, because it takes too much time.
+Installing `libtensorflow.so` is a lot more difficult, because it takes too much time to build it.
 
 But it is worth trying; managing TensorFlow graphs in golang will be handy for people who don't love python - just like me.
 
@@ -346,7 +332,9 @@ But it is worth trying; managing TensorFlow graphs in golang will be handy for p
 
 # 999. If you need one,
 
-Do you need the compiled file? Good, take it [here](https://github.com/meinside/libtensorflow.so-raspberrypi/releases).
+You don't have time to build it yourself, but still need the compiled file?
+
+Good, take it [here](https://github.com/meinside/libtensorflow.so-raspberrypi/releases).
 
 I cannot promise, but will try keeping it up-to-date whenever a newer version of tensorflow comes out.
 
