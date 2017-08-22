@@ -8,6 +8,8 @@ tags:
 published: true
 ---
 
+**Note:** This post is outdated. If you're looking for a guide for Raspbian Stretch or Tensorflow 1.3+, check [this post](/TensorFlow-and-Go-on-Raspberry-Pi/).
+
 **Updated on 2017-06-19, for Tensorflow 1.2.0**
 
 [TensorFlow 1.0 now supports Golang](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/go), so I gave it a try on Raspberry Pi:
