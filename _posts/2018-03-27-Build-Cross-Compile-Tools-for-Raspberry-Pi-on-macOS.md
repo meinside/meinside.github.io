@@ -69,10 +69,10 @@ Let's copy header and library files from Raspberry Pi over the network with `rsy
 {% highlight bash %}
 $ brew install rsync
 $ /usr/local/bin/rsync -rzLR --safe-links \
-	pi@raspberrypi:/usr/lib/arm-linux-gnueabihf \
-	pi@raspberrypi:/usr/lib/gcc/arm-linux-gnueabihf \
-	pi@raspberrypi:/usr/include \
-	pi@raspberrypi:/lib/arm-linux-gnueabihf \
+	pi@raspberry:/usr/lib/arm-linux-gnueabihf \
+	pi@raspberry:/usr/lib/gcc/arm-linux-gnueabihf \
+	pi@raspberry:/usr/include \
+	pi@raspberry:/lib/arm-linux-gnueabihf \
 	raspbian-sdk/sysroot
 {% endhighlight %}
 
