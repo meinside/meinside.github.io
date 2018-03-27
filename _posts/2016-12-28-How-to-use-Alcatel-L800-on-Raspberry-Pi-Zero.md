@@ -30,9 +30,9 @@ I booted my Pi Zero up and plugged L800 in.
 
 With `lsusb`, I could see it in the list:
 
-```bash
+{% highlight bash %}
 $ lsusb
-```
+{% endhighlight %}
 
 ![1_lsusb](https://cloud.githubusercontent.com/assets/185988/21514235/444728fe-cd06-11e6-908c-6db024f7e973.png)
 
@@ -46,21 +46,21 @@ It is said that L800 works as external USB disk when plugged in.
 
 I needed to use it as USB modem, not USB disk, so I had to use `usb_modeswitch`:
 
-```bash
+{% highlight bash %}
 $ sudo apt-get install usb-modeswitch
-```
+{% endhighlight %}
 
 After installing, I had to create a file named `/etc/udev/rules.d/41-usb_modeswitch.rules`:
 
-```bash
+{% highlight bash %}
 $ sudo vi /etc/udev/rules.d/41-usb_modeswitch.rules
-```
+{% endhighlight %}
 
 and add following line:
 
-```
+{% highlight bash %}
 ATTRS{idVendor}=="1bbb", ATTRS{idProduct}=="f000", RUN+="/usr/sbin/usb_modeswitch -v 1bbb -p f000 -P 0017 -M 55534243123456788000000080000606f50402527000000000000000000000"
-```
+{% endhighlight %}
 
 With this file, L800's USB mode will be switched automatically from **disk** to **modem** on every boot.
 
@@ -70,17 +70,17 @@ Assuming that my L800 would be working as a modem, I had to turn it up as a netw
 
 I opened up `/etc/network/interfaces/`:
 
-```bash
+{% highlight bash %}
 $ sudo vi /etc/network/interfaces
-```
+{% endhighlight %}
 
 and appended:
 
-```
+{% highlight bash %}
 # for Alcatel L800
 auto usb0
 iface usb0 inet dhcp
-```
+{% endhighlight %}
 
 Then my `/etc/network/interfaces` looked like this:
 
@@ -88,19 +88,19 @@ Then my `/etc/network/interfaces` looked like this:
 
 After rebooting, I could see **usb0** device listed as network interface:
 
-```bash
+{% highlight bash %}
 $ /sbin/ifconfig
-```
+{% endhighlight %}
 
 ![4_ifconfig](https://cloud.githubusercontent.com/assets/185988/21514239/4bb75e88-cd06-11e6-97cc-71ac8d5e373b.png)
 
 After removing the WiFi dongle, I could see an *unfamiliar IP* assigned to my Raspberry Pi:
 
-```bash
+{% highlight bash %}
 $ curl ifconfig.co
 # or, test on usb0
 $ curl ifconfig.co --interface usb0
-```
+{% endhighlight %}
 
 ![5_ifconfig_and_ip](https://cloud.githubusercontent.com/assets/185988/21514240/4e753438-cd06-11e6-86b1-1eac4226a3ac.png)
 
@@ -124,10 +124,10 @@ I have also tested on Raspberry Pi 3, and **it worked great** without any extern
 
 Try turning it off and on with:
 
-```bash
+{% highlight bash %}
 $ sudo ifdown usb0
 $ sudo ifup usb0
-```
+{% endhighlight %}
 
 and test again.
 

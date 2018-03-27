@@ -18,30 +18,30 @@ With [Leiningen](http://leiningen.org/) and its plugin, [Clojure](http://clojure
 
 Firstly, we need Java:
 
-```bash
+{% highlight bash %}
 $ sudo apt-get install oracle-java8-jdk
-```
+{% endhighlight %}
 
 After that, download and place `lein` script in a preferred place:
 
-```bash
+{% highlight bash %}
 $ sudo wget "https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein" -O "/usr/local/bin/lein"
-```
+{% endhighlight %}
 
 We need additional permissions for running `lein`:
 
-```bash
+{% highlight bash %}
 $ sudo chown $USER.$USER "/usr/local/bin/lein"
 $ sudo chmod uog+x "/usr/local/bin/lein"
-```
+{% endhighlight %}
 
 After all things are setup correctly, we can see the version of `lein` with following command:
 
-```bash
+{% highlight bash %}
 $ lein version
 Leiningen 2.7.1 on Java 1.8.0_65 Java HotSpot(TM) Client VM
 $
-```
+{% endhighlight %}
 
 ## B. Install lein-exec
 
@@ -49,9 +49,9 @@ We need [lein-exec](https://github.com/kumarshantanu/lein-exec) for executing Cl
 
 Add `[lein-exec "0.3.6"]` to your `~/.lein/profiles.clj`, then it will look like:
 
-```clojure
+{% highlight clojure %}
 {:user {:plugins [[lein-exec "0.3.6"]]}}
-```
+{% endhighlight %}
 
 `lein-exec` will be installed automatically when next time you run `lein`.
 
@@ -59,21 +59,21 @@ Add `[lein-exec "0.3.6"]` to your `~/.lein/profiles.clj`, then it will look like
 
 Append following line on the first line of your script:
 
-```bash
+{% highlight bash %}
 #!/usr/bin/env lein exec
-```
+{% endhighlight %}
 
 and add execute permission to your script:
 
-```bash
+{% highlight bash %}
 $ chmod +x aaaaaa.clj
-```
+{% endhighlight %}
 
 then it will be runnable by itself:
 
-```bash
+{% highlight bash %}
 $ ./aaaaaa.clj
-```
+{% endhighlight %}
 
 ----
 

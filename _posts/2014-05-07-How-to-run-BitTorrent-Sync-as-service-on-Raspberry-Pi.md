@@ -157,7 +157,7 @@ $ sudo vi /lib/systemd/system/btsync.service
 
 and fill it with following content:
 
-```
+{% highlight bash %}
 [Unit]
 Description=BitTorrent Sync Service
 Wants=network.target
@@ -170,7 +170,7 @@ ExecStart=BTSYNC_DIR/btsync --config BTSYNC_CONF_DIR/btsync.conf --nodaemon
 
 [Install]
 WantedBy=multi-user.target
-```
+{% endhighlight %}
 
 Replace **GROUP\_NAME**, **USER\_NAME**, **BTSYNC\_DIR**, and **BTSYNC\_CONF\_DIR** to yours.
 

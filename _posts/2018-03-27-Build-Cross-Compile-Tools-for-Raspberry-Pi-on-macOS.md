@@ -24,22 +24,22 @@ Written and tested with:
 
 Create a SDK directory for not messing other things up:
 
-```bash
+{% highlight bash %}
 $ mkdir -p raspbian-sdk/{prebuilt,sysroot}
-```
+{% endhighlight %}
 
 ## Download / Install Tools
 
 ### clang+llvm
 
-```bash
+{% highlight bash %}
 $ wget http://releases.llvm.org/6.0.0/clang+llvm-6.0.0-x86_64-apple-darwin.tar.xz
 $ tar -xzvf clang+llvm-6.0.0-x86_64-apple-darwin.tar.xz -C "raspbian-sdk/prebuilt" --strip-components=1
-```
+{% endhighlight %}
 
 ### binutils
 
-```bash
+{% highlight bash %}
 $ wget http://ftp.gnu.org/gnu/binutils/binutils-2.30.tar.xz
 $ tar -xzvf binutils-2.30.tar.xz
 $ cd binutils-2.30
@@ -54,19 +54,19 @@ $ ./configure --prefix="`/usr/local/bin/realpath ../raspbian-sdk/prebuilt`" \
 	--disable-werror \
 	--quiet
 $ make && make install
-```
+{% endhighlight %}
 
 Now come back to the initial directory:
 
-```bash
+{% highlight bash %}
 $ cd ..
-```
+{% endhighlight %}
 
 ## Copy Header/Library Files from Raspberry Pi
 
 Let's copy header and library files from Raspberry Pi over the network with `rsync`:
 
-```bash
+{% highlight bash %}
 $ brew install rsync
 $ /usr/local/bin/rsync -rzLR --safe-links \
 	pi@raspberrypi:/usr/lib/arm-linux-gnueabihf \
@@ -74,19 +74,19 @@ $ /usr/local/bin/rsync -rzLR --safe-links \
 	pi@raspberrypi:/usr/include \
 	pi@raspberrypi:/lib/arm-linux-gnueabihf \
 	raspbian-sdk/sysroot
-```
+{% endhighlight %}
 
 ## Create a Wrapper Shell Script for Cross Compiling
 
 Open a new file,
 
-```bash
+{% highlight bash %}
 $ vi raspbian-sdk/prebuilt/bin/arm-linux-gnueabihf-clang
-```
+{% endhighlight %}
 
 and fill it with following lines:
 
-```bash
+{% highlight bash %}
 #!/bin/bash
 BASE=$(dirname $0)
 SYSROOT="${BASE}/../../sysroot"
@@ -99,13 +99,13 @@ exec env COMPILER_PATH="${COMPILER_PATH}" \
 		-L"${COMPILER_PATH}" \
 		--gcc-toolchain="${BASE}" \
 		"$@"
-```
+{% endhighlight %}
 
 then grant executable permission to it:
 
-```bash
+{% highlight bash %}
 $ chmod +x raspbian-sdk/prebuilt/bin/arm-linux-gnueabihf-clang
-```
+{% endhighlight %}
 
 ----
 
@@ -113,42 +113,42 @@ $ chmod +x raspbian-sdk/prebuilt/bin/arm-linux-gnueabihf-clang
 
 Create a `hello.c` file with following content:
 
-```c
+{% highlight c %}
 #include <stdio.h>
 
 int main(int argc, char** argv) {
 	printf("Hello, world\n");
 	return 0;
 }
-```
+{% endhighlight %}
 
 then build it with the shell script:
 
-```bash
+{% highlight bash %}
 $ raspbian-sdk/prebuilt/bin/arm-linux-gnueabihf-clang -o hello hello.c
-```
+{% endhighlight %}
 
 If nothing goes wrong, a file named `hello` would be generated.
 
 Upload it to the Raspberry Pi and run with:
 
-```bash
+{% highlight bash %}
 pi@raspberry $ ./hello
-```
+{% endhighlight %}
 
 then it will print out:
 
-```
+{% highlight bash %}
 Hello, world
-```
+{% endhighlight %}
 
 Well done!
 
 If any error occures while building, try again with `-v` option to see what went wrong:
 
-```bash
+{% highlight bash %}
 $ raspbian-sdk/prebuilt/bin/arm-linux-gnueabihf-clang -o hello hello.c -v
-```
+{% endhighlight %}
 
 You may have to change the version number of **COMPILER_PATH** in your shell script, or install some packages on Raspberry Pi and copy header/library files again.
 

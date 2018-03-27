@@ -28,9 +28,9 @@ Java needs to be installed on your machine.
 
 In my case, I installed oracle-java8-jdk:
 
-```bash
+{% highlight bash %}
 $ sudo apt-get install oracle-java8-jdk
-```
+{% endhighlight %}
 
 My Raspberry Pi has the minimum amount of GPU memory(16MB), and an external HDD attached for root partition.
 
@@ -40,15 +40,15 @@ Additionally, the server uses port no: **25565**, so you should open the port if
 
 On your Raspberry Pi, download the build tools:
 
-```bash
+{% highlight bash %}
 $ wget https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar
-```
+{% endhighlight %}
 
 and run it (you need Java installed):
 
-```bash
+{% highlight bash %}
 $ java -jar BuildTools.jar
-```
+{% endhighlight %}
 
 After some minutes, you'll see the built file named: `spigot-1.10.2.jar`.
 (Of course, the version number may vary.)
@@ -57,13 +57,13 @@ After some minutes, you'll see the built file named: `spigot-1.10.2.jar`.
 
 Run the jar file for the first time:
 
-```bash
+{% highlight bash %}
 $ java -jar -Xms512M -Xmx1008M spigot-1.10.2.jar nogui
-```
+{% endhighlight %}
 
 then you'll get a file named: `eula.txt` with this output:
 
-```
+{% highlight bash %}
 Loading libraries, please wait...
 [17:40:10 INFO]: Starting minecraft server version 1.10.2
 [17:40:10 INFO]: Loading properties
@@ -72,13 +72,13 @@ Loading libraries, please wait...
 [17:40:10 WARN]: Failed to load eula.txt
 [17:40:10 INFO]: You need to agree to the EULA in order to run the server. Go to eula.txt for more info.
 [17:40:10 INFO]: Stopping server
-```
+{% endhighlight %}
 
 Read `eula.txt` carefully and do the following if you agree with it:
 
-```bash
+{% highlight bash %}
 $ sed -i -e 's/eula=false/eula=true/g' eula.txt
-```
+{% endhighlight %}
 
 ## 3. Run the server
 
@@ -86,13 +86,13 @@ After accepting EULA, now it's the time to launch the server.
 
 Run the jar file again:
 
-```bash
+{% highlight bash %}
 $ java -jar -Xms512M -Xmx1008M spigot-1.10.2.jar nogui
-```
+{% endhighlight %}
 
 In a few minutes, you'll get into a prompt like this:
 
-```
+{% highlight bash %}
 ...
 [17:53:38 INFO]: Preparing spawn area: 83%
 [17:53:39 INFO]: Preparing spawn area: 87%
@@ -101,7 +101,7 @@ In a few minutes, you'll get into a prompt like this:
 [17:53:42 INFO]: Preparing spawn area: 97%
 [17:53:43 INFO]: Done (256.835s)! For help, type "help" or "?"
 >
-```
+{% endhighlight %}
 
 Now your server is up and running!
 
@@ -119,11 +119,11 @@ You cannot run/stop the server manually every time, so it needs to be managed as
 
 Firstly, install mcrcon for controlling the server conveniently:
 
-```bash
+{% highlight bash %}
 $ git clone  git://git.code.sf.net/p/mcrcon/code mcrcon
 $ cd mcrcon
 $ gcc mcrcon.c -o mcrcon
-```
+{% endhighlight %}
 
 After that, change **enable-rcon=false** to **enable-rcon=true** in the `server.properties` file.
 
@@ -131,13 +131,13 @@ You should also add **rcon.password=PASSWORD** in it.
 
 Next, create a systemd service file like this:
 
-```bash
+{% highlight bash %}
 $ sudo vi /lib/systemd/system/minecraft-server.service
-```
+{% endhighlight %}
 
 then fill with following lines:
 
-```
+{% highlight bash %}
 [Unit]
 Description=Spigot Minecraft Server
 After=syslog.target
@@ -156,7 +156,7 @@ Environment=
 
 [Install]
 WantedBy=multi-user.target
-```
+{% endhighlight %}
 
 Replace **User**, **Group**, **WorkingDirectory**, **ExecStart**, and **ExecStop** values with yours, then all is done.
 
@@ -164,22 +164,22 @@ Replace **User**, **Group**, **WorkingDirectory**, **ExecStart**, and **ExecStop
 
 If you want to launch the server automatically when your Raspberry Pi is up:
 
-```bash
+{% highlight bash %}
 $ sudo systemctl enable minecraft-server.service
-```
+{% endhighlight %}
 
 ### For starting/stopping the server
 
 If you want to start or stop the server manually:
 
-```bash
+{% highlight bash %}
 $ sudo systemctl start minecraft-server.service
 $ sudo systemctl stop minecraft-server.service
-```
+{% endhighlight %}
 
 It will take several seconds to start/stop the server, so please be patient.
 
-```
+{% highlight bash %}
 ● minecraft-server.service - Spigot Minecraft Server
    Loaded: loaded (/lib/systemd/system/minecraft-server.service; disabled)
    Active: active (running) since Thu 2016-11-24 18:46:46 KST; 1min 3s ago
@@ -197,7 +197,7 @@ Nov 24 18:47:40 raspberry java[17214]: [18:47:40 INFO]: Preparing start region f
 Nov 24 18:47:41 raspberry java[17214]: [18:47:41 INFO]: Preparing spawn area: 46%
 Nov 24 18:47:42 raspberry java[17214]: [18:47:42 INFO]: Server permissions file permissions.yml is empty, ignoring it
 Nov 24 18:47:42 raspberry java[17214]: [18:47:42 INFO]: Done (30.277s)! For help, type "help" or "?"
-```
+{% endhighlight %}
 
 ## 5. Trouble shooting
 
@@ -205,21 +205,21 @@ Nov 24 18:47:42 raspberry java[17214]: [18:47:42 INFO]: Done (30.277s)! For help
 
 If you cannot connect to the server with 'server is outdated' error, generate a new .jar file with:
 
-```bash
+{% highlight bash %}
 # if the newest version is '1.11'
 $ java -jar BuildTools.jar --rev 1.11
 # or 'latest'
 $ java -jar BuildTools.jar --rev latest
-```
+{% endhighlight %}
 
 If you're not sure, you can find all versions [here](https://hub.spigotmc.org/versions/).
 
 After generation, edit the service file and restart the service:
 
-```bash
+{% highlight bash %}
 $ sudo systemctl daemon-reload
 $ sudo systemctl restart minecraft-server.service
-```
+{% endhighlight %}
 
 ## 6. Wrap-up
 

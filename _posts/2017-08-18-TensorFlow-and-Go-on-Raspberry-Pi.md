@@ -31,15 +31,15 @@ Before the beginning, I had to install dependencies:
 
 ### for protobuf
 
-```bash
+{% highlight bash %}
 $ sudo apt-get install autoconf automake libtool
-```
+{% endhighlight %}
 
 ### for bazel
 
-```bash
+{% highlight bash %}
 $ sudo apt-get install pkg-config zip g++ zlib1g-dev unzip oracle-java8-jdk
-```
+{% endhighlight %}
 
 ----
 
@@ -47,13 +47,13 @@ $ sudo apt-get install pkg-config zip g++ zlib1g-dev unzip oracle-java8-jdk
 
 I cloned the protobuf's repository:
 
-```bash
+{% highlight bash %}
 $ git clone https://github.com/google/protobuf.git
-```
+{% endhighlight %}
 
 and started building:
 
-```bash
+{% highlight bash %}
 $ cd protobuf
 $ git checkout v3.1.0
 $ ./autogen.sh
@@ -61,19 +61,19 @@ $ ./configure
 $ make -j 4
 $ sudo make install
 $ sudo ldconfig
-```
+{% endhighlight %}
 
 It took less than an hour to finish.
 
 I could see the version of installed protobuf with:
 
-```bash
+{% highlight bash %}
 $ protoc --version
-```
+{% endhighlight %}
 
-```
+{% highlight bash %}
 libprotoc 3.1.0
-```
+{% endhighlight %}
 
 # 2. Install Bazel
 
@@ -81,35 +81,35 @@ libprotoc 3.1.0
 
 I got a zip file of bazel from [here](https://github.com/bazelbuild/bazel/releases) and unzipped it:
 
-```bash
+{% highlight bash %}
 $ wget https://github.com/bazelbuild/bazel/releases/download/0.5.1/bazel-0.5.1-dist.zip
 $ unzip -d bazel bazel-0.5.1-dist.zip
-```
+{% endhighlight %}
 
 ## b. edit bootstrap files
 
 In the unzipped directory, I opened the `scripts/bootstrap/compile.sh` file:
 
-```bash
+{% highlight bash %}
 $ cd bazel
 $ vi scripts/bootstrap/compile.sh
-```
+{% endhighlight %}
 
 searched for lines that looked like following:
 
-```
+{% highlight bash %}
 run "${JAVAC}" -classpath "${classpath}" -sourcepath "${sourcepath}" \
       -d "${output}/classes" -source "$JAVA_VERSION" -target "$JAVA_VERSION" \
       -encoding UTF-8 "@${paramfile}"
-```
+{% endhighlight %}
 
 and appended `-J-Xmx500M` to the last line so that the whole lines would look like:
 
-```
+{% highlight bash %}
 run "${JAVAC}" -classpath "${classpath}" -sourcepath "${sourcepath}" \
       -d "${output}/classes" -source "$JAVA_VERSION" -target "$JAVA_VERSION" \
       -encoding UTF-8 "@${paramfile}" -J-Xmx500M
-```
+{% endhighlight %}
 
 It was for enlarging the max heap size of Java.
 
@@ -117,10 +117,10 @@ It was for enlarging the max heap size of Java.
 
 After that, started building with:
 
-```bash
+{% highlight bash %}
 $ chmod u+w ./* -R
 $ ./compile.sh
-```
+{% endhighlight %}
 
 It also took about an hour.
 
@@ -130,9 +130,9 @@ After the compilation had finished, I could find the compiled binary in `output`
 
 Copied it into `/usr/local/bin` directory:
 
-```bash
+{% highlight bash %}
 $ sudo cp output/bazel /usr/local/bin/
-```
+{% endhighlight %}
 
 # 3. Build libtensorflow.so
 
@@ -142,54 +142,54 @@ $ sudo cp output/bazel /usr/local/bin/
 
 Got the tensorflow go code with:
 
-```bash
+{% highlight bash %}
 $ go get -d github.com/tensorflow/tensorflow/tensorflow/go
-```
+{% endhighlight %}
 
 ## b. edit files
 
 In the downloaded directory, I checked out the latest tag and replaced `lib64` to `lib` in the files with:
 
-```bash
+{% highlight bash %}
 $ cd ${GOPATH}/src/github.com/tensorflow/tensorflow
 $ git fetch --all --tags --prune
 $ git checkout tags/v1.3.0
 $ grep -Rl 'lib64' | xargs sed -i 's/lib64/lib/g'
-```
+{% endhighlight %}
 
 Raspberry Pi still runs on 32bit OS, so they had to be changed like this.
 
 After that, I commented `#define IS_MOBILE_PLATFORM` out in `tensorflow/core/platform/platform.h`:
 
-```c
+{% highlight c %}
 // Since there's no macro for the Raspberry Pi, assume we're on a mobile
 // platform if we're compiling for the ARM CPU.
 //#define IS_MOBILE_PLATFORM	// <= commented this line
-```
+{% endhighlight %}
 
 If it is not commented out, bazel will build for mobile platforms like `iOS` or `Android`, not Raspberry Pi.
 
 To do this easily, just run:
 
-```bash
+{% highlight bash %}
 $ sed -i "s|#define IS_MOBILE_PLATFORM|//#define IS_MOBILE_PLATFORM|g" tensorflow/core/platform/platform.h
-```
+{% endhighlight %}
 
 Finally, it was time to configure and build tensorflow.
 
 ## c. configure and build
 
-```bash
+{% highlight bash %}
 $ ./configure
-```
+{% endhighlight %}
 
 I had to answer to some questions here.
 
 Then I started building `libtensorflow.so` with:
 
-```bash
+{% highlight bash %}
 $ bazel build -c opt --copt="-mfpu=neon-vfpv4" --copt="-funsafe-math-optimizations" --copt="-ftree-vectorize" --copt="-fomit-frame-pointer" --jobs 1 --local_resources 1024,1.0,1.0 --verbose_failures --genrule_strategy=standalone --spawn_strategy=standalone //tensorflow:libtensorflow.so
-```
+{% endhighlight %}
 
 My Pi became unresponsive many times during this process, but I kept it going on.
 
@@ -201,11 +201,11 @@ I finally got `libtensorflow.so` compiled in `bazel-bin/tensorflow/`.
 
 So I copied it into `/usr/local/lib/`:
 
-```bash
+{% highlight bash %}
 $ sudo cp ./bazel-bin/tensorflow/libtensorflow.so /usr/local/lib/
 $ sudo chmod 644 /usr/local/lib/libtensorflow.so
 $ sudo ldconfig
-```
+{% endhighlight %}
 
 All done. Time to test!
 
@@ -213,29 +213,29 @@ All done. Time to test!
 
 I ran a test for validating the installation:
 
-```bash
+{% highlight bash %}
 $ go test github.com/tensorflow/tensorflow/tensorflow/go
-```
+{% endhighlight %}
 
 then I could see:
 
-```
+{% highlight bash %}
 ok      github.com/tensorflow/tensorflow/tensorflow/go  0.350s
-```
+{% endhighlight %}
 
 Ok, it works!
 
 **Edit**: As [this instruction](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/go#generate-wrapper-functions-for-ops) says, I had to regenerate operations before the test:
 
-```bash
+{% highlight bash %}
 $ go generate github.com/tensorflow/tensorflow/tensorflow/go/op
-```
+{% endhighlight %}
 
 # 5. Further Test
 
 I wanted to see a simple go program running, so I wrote this code:
 
-```go
+{% highlight go %}
 // sample.go
 package main
 
@@ -253,13 +253,13 @@ func main() {
 		fmt.Printf("The answer to the life, universe, and everything: %v\n", v)
 	}
 }
-```
+{% endhighlight %}
 
 and ran it with `go run sample.go`:
 
-```
+{% highlight bash %}
 The answer to the life, universe, and everything: 42
-```
+{% endhighlight %}
 
 See the result?
 
@@ -275,7 +275,7 @@ Back in the day with [Tensorflow 1.2.0](https://github.com/tensorflow/tensorflow
 
 So I had to work around this problem again by editing `tensorflow/workspace.bzl` from:
 
-```
+{% highlight bash %}
 native.new_http_archive(
 	name = "eigen_archive",
 	urls = [
@@ -286,11 +286,11 @@ native.new_http_archive(
 	strip_prefix = "eigen-eigen-f3a22f35b044",
 	build_file = str(Label("//third_party:eigen.BUILD")),
 )
-```
+{% endhighlight %}
 
 to:
 
-```
+{% highlight bash %}
 native.new_http_archive(
 	name = "eigen_archive",
 	urls = [
@@ -301,17 +301,17 @@ native.new_http_archive(
 	strip_prefix = "eigen-eigen-d781c1de9834",
 	build_file = str(Label("//third_party:eigen.BUILD")),
 )
-```
+{% endhighlight %}
 
 and starting again from the beginning:
 
-```bash
+{% highlight bash %}
 $ bazel clean
 $ ./configure
 $ bazel build -c opt --copt="-mfpu=neon-vfpv4" --copt="-funsafe-math-optimizations" --copt="-ftree-vectorize" --copt="-fomit-frame-pointer" --jobs 1 --local_resources 1024,1.0,1.0 --verbose_failures --genrule_strategy=standalone --spawn_strategy=standalone //tensorflow:libtensorflow.so
 
 ...
-```
+{% endhighlight %}
 
 Then I could build it without further problems.
 

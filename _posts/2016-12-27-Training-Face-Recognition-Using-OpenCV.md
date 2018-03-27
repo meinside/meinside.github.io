@@ -31,7 +31,7 @@ Knowing not all my photos were usable for the training, I wanted to filter out u
 
 For the refinement, I ran following python script:
 
-```python
+{% highlight python %}
 #!/usr/bin/env python
 
 import cv2
@@ -60,7 +60,7 @@ filepaths = glob.glob(path.join(PHOTOS_DIR, '*.jpg'))
 for filepath in filepaths:
     marked_image = mark_face(default_cascade, filepath)
     cv2.imwrite(path.join(CHECKED_PHOTOS_DIR, path.basename(filepath)), marked_image)
-```
+{% endhighlight %}
 
 This script detects faces from photos in **PHOTOS_DIR** with pre-trained cascade file,
 draws red rectangles on them, and saves the result photos in **CHECKED_PHOTOS_DIR**.
@@ -77,7 +77,7 @@ I downloaded negative facial images from [here](https://www.bioid.com/download?p
 
 With the negative images, following script generates `positive.txt` and `negative.txt`:
 
-```python
+{% highlight python %}
 #!/usr/bin/env python
 
 import cv2
@@ -134,7 +134,7 @@ negative_file.close()
 
 # print result
 print 'Total ' + str(num_detected) + '/' + str(len(pfilepaths)) + ' positive images, ' + str(len(nfilepaths)) + ' negative images'
-```
+{% endhighlight %}
 
 `positive.txt` is filled up with lines which consist of positive image's filepath and facial positions.
 
@@ -144,9 +144,9 @@ print 'Total ' + str(num_detected) + '/' + str(len(pfilepaths)) + ' positive ima
 
 I ran following command with generated `positive.txt`:
 
-```bash
+{% highlight bash %}
 $ opencv_createsamples -info positive.txt -vec training.vec -num 400
-```
+{% endhighlight %}
 
 and got `training.vec` as a result.
 
@@ -154,10 +154,10 @@ and got `training.vec` as a result.
 
 Finally, with generated `training.vec` and `negative.txt`, I ran:
 
-```bash
+{% highlight bash %}
 $ mkdir -f result
 $ opencv_traincascade -data result -vec training.vec -bg negative.txt -numPos 300 -numNeg 1500 -featureType HAAR -mode CORE -numStages 12 -maxFalseAlarmRate 0.5 -minHitRate 0.995
-```
+{% endhighlight %}
 
 (Parameters may vary.)
 
@@ -171,7 +171,7 @@ I got `cascade.xml`, and wanted to verify it if the training was successful.
 
 I slightly modified the first python script:
 
-```python
+{% highlight python %}
 #!/usr/bin/env python
 
 import cv2
@@ -218,7 +218,7 @@ for filepath in filepaths:
 
 # print result
 print 'Total ' + str(num_detected) + '/' + str(len(filepaths)) + ' faces were marked in directory: ' + CHECKED_PHOTOS_DIR 
-```
+{% endhighlight %}
 
 This script now draws rectangles on faces recognized by the newly-generated cascade file(`result/cascade.xml`).
 
