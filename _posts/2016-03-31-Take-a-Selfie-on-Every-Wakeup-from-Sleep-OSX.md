@@ -1,8 +1,8 @@
 ---
 layout: post
-title: Take a selfie on every wake-up from sleep (OSX)
+title: Take a selfie on every wake-up from sleep (macOS)
 tags:
-- osx
+- macOS
 published: true
 ---
 
