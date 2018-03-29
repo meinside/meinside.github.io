@@ -35,32 +35,41 @@ Before the beginning, I had to install dependencies:
 
 ### for python
 
-```bash
+{% highlight bash %}
 $ sudo apt-get install python-pip python-numpy swig python-dev
 $ sudo pip install wheel
-```
+{% endhighlight %}
 
 ### for protobuf
 
-```bash
+{% highlight bash %}
 $ sudo apt-get install autoconf automake libtool
-```
+{% endhighlight %}
 
 ### for bazel
 
-```bash
+{% highlight bash %}
 $ sudo apt-get install pkg-config zip g++ zlib1g-dev unzip oracle-java8-jdk
-```
+{% endhighlight %}
 
 ### for compiler optimization and avoiding possible errors
 
 It is said that both protobuf and tensorflow should be built with **gcc-4.8**, so... :
 
-```bash
+{% highlight bash %}
 $ sudo apt-get install gcc-4.8 g++-4.8
 $ sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 100
 $ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 100
-```
+{% endhighlight %}
+
+then **gcc-4.8** will be used instead.
+
+It can be changed back later with:
+
+{% highlight bash %}
+$ sudo update-alternatives --remove-all gcc
+$ sudo update-alternatives --remove-all g++
+{% endhighlight %}
 
 ----
 
@@ -68,13 +77,13 @@ $ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 100
 
 I cloned the repository:
 
-```bash
+{% highlight bash %}
 $ git clone https://github.com/google/protobuf.git
-```
+{% endhighlight %}
 
 and built it:
 
-```bash
+{% highlight bash %}
 $ cd protobuf
 $ git checkout v3.1.0
 $ ./autogen.sh
@@ -82,17 +91,17 @@ $ ./configure
 $ make CXX=g++-4.8 -j 4
 $ sudo make install
 $ sudo ldconfig
-```
+{% endhighlight %}
 
 The build took less than 1 hour to finish.
 
 I could see the version of installed protobuf like:
 
-```bash
+{% highlight bash %}
 $ protoc --version
 
 libprotoc 3.1.0
-```
+{% endhighlight %}
 
 # 2. Install Bazel
 
@@ -100,35 +109,35 @@ libprotoc 3.1.0
 
 I got the latest release from [here](https://github.com/bazelbuild/bazel/releases), and unzipped it:
 
-```bash
+{% highlight bash %}
 $ wget https://github.com/bazelbuild/bazel/releases/download/0.5.1/bazel-0.5.1-dist.zip
 $ unzip -d bazel bazel-0.5.1-dist.zip
-```
+{% endhighlight %}
 
 ## b. edit bootstrap files
 
 In the unzipped directory, I opened the `scripts/bootstrap/compile.sh` file:
 
-```bash
+{% highlight bash %}
 $ cd bazel
 $ vi scripts/bootstrap/compile.sh
-```
+{% endhighlight %}
 
 searched for lines that looked like following:
 
-```
+{% highlight bash %}
 run "${JAVAC}" -classpath "${classpath}" -sourcepath "${sourcepath}" \
       -d "${output}/classes" -source "$JAVA_VERSION" -target "$JAVA_VERSION" \
       -encoding UTF-8 "@${paramfile}"
-```
+{% endhighlight %}
 
 and appended `-J-Xmx500M` to the last line so that the whole lines would look like:
 
-```
+{% highlight bash %}
 run "${JAVAC}" -classpath "${classpath}" -sourcepath "${sourcepath}" \
       -d "${output}/classes" -source "$JAVA_VERSION" -target "$JAVA_VERSION" \
       -encoding UTF-8 "@${paramfile}" -J-Xmx500M
-```
+{% endhighlight %}
 
 It was for enlarging the max heap size of Java.
 
@@ -136,10 +145,10 @@ It was for enlarging the max heap size of Java.
 
 After that, started building with:
 
-```bash
+{% highlight bash %}
 $ chmod u+w ./* -R
 $ ./compile.sh
-```
+{% endhighlight %}
 
 This compilation took about an hour.
 
@@ -149,9 +158,9 @@ After the compilation had finished, I could find the compiled binary in `output`
 
 Copied it into `/usr/local/bin` directory:
 
-```bash
+{% highlight bash %}
 $ sudo cp output/bazel /usr/local/bin/
-```
+{% endhighlight %}
 
 # 3. Build libtensorflow.so
 
@@ -161,38 +170,38 @@ $ sudo cp output/bazel /usr/local/bin/
 
 Got the tensorflow go code with:
 
-```bash
+{% highlight bash %}
 $ go get -d github.com/tensorflow/tensorflow/tensorflow/go
-```
+{% endhighlight %}
 
 ## b. edit files
 
 In the downloaded directory, I checked out the latest tag and replaced `lib64` to `lib` in the files with:
 
-```bash
+{% highlight bash %}
 $ cd ${GOPATH}/src/github.com/tensorflow/tensorflow
 $ git fetch --all --tags --prune
 $ git checkout tags/v1.2.0
 $ grep -Rl 'lib64' | xargs sed -i 's/lib64/lib/g'
-```
+{% endhighlight %}
 
 Raspberry Pi still runs on 32bit OS, so they had to be changed like this.
 
 After that, I commented `#define IS_MOBILE_PLATFORM` in `tensorflow/core/platform/platform.h`:
 
-```c
+{% highlight c %}
 // Since there's no macro for the Raspberry Pi, assume we're on a mobile
 // platform if we're compiling for the ARM CPU.
 //#define IS_MOBILE_PLATFORM	// <= commented this line
-```
+{% endhighlight %}
 
 If it is not commented out, bazel will build for mobile platforms like `iOS` or `Android`, not Raspberry Pi.
 
 To do this easily, just run:
 
-```bash
+{% highlight bash %}
 $ sed -i "s|#define IS_MOBILE_PLATFORM|//#define IS_MOBILE_PLATFORM|g" tensorflow/core/platform/platform.h
-```
+{% endhighlight %}
 
 Finally, it was time to build tensorflow.
 
@@ -200,20 +209,20 @@ Finally, it was time to build tensorflow.
 
 Started building `libtensorflow.so` with:
 
-```bash
+{% highlight bash %}
 $ ./configure
 # (=> I answered to some questions here)
 $ bazel build -c opt --copt="-mfpu=neon-vfpv4" --copt="-funsafe-math-optimizations" --copt="-ftree-vectorize" --copt="-fomit-frame-pointer" --jobs 1 --local_resources 1024,1.0,1.0 --verbose_failures --genrule_strategy=standalone --spawn_strategy=standalone //tensorflow:libtensorflow.so
-```
+{% endhighlight %}
 
 I could tweak the **--local_resources** option as [this bazel manual](https://bazel.build/versions/master/docs/bazel-user-manual.html#flag--local_resources),
 
 but if set too agressively, bazel could freeze or even crash with error messages like:
 
-```
+{% highlight bash %}
 Process exited with status 4.
 gcc: internal compiler error: Killed (program cc1plus)
-```
+{% endhighlight %}
 
 If this happens, just restart the build. It will resume from the point where it crashed.
 
@@ -227,11 +236,11 @@ I finally got `libtensorflow.so` compiled in `bazel-bin/tensorflow/`.
 
 So I copied it into `/usr/local/lib/`:
 
-```bash
+{% highlight bash %}
 $ sudo cp ./bazel-bin/tensorflow/libtensorflow.so /usr/local/lib/
 $ sudo chmod 644 /usr/local/lib/libtensorflow.so
 $ sudo ldconfig
-```
+{% endhighlight %}
 
 All done. Time to test!
 
@@ -239,29 +248,29 @@ All done. Time to test!
 
 I ran a test for validating the installation:
 
-```bash
+{% highlight bash %}
 $ go test github.com/tensorflow/tensorflow/tensorflow/go
-```
+{% endhighlight %}
 
 then I could see:
 
-```
+{% highlight bash %}
 ok      github.com/tensorflow/tensorflow/tensorflow/go  2.084s
-```
+{% endhighlight %}
 
 Ok, it works!
 
 **Edit**: As [this instruction](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/go#generate-wrapper-functions-for-ops) says, I had to regenerate operations before the test:
 
-```bash
+{% highlight bash %}
 $ go generate github.com/tensorflow/tensorflow/tensorflow/go/op
-```
+{% endhighlight %}
 
 # 5. Further Test
 
 Wanted to see a simple go program running, so I wrote:
 
-```go
+{% highlight go %}
 // sample.go
 package main
 
@@ -279,13 +288,13 @@ func main() {
         fmt.Printf("The answer is %v\n", v)
     }
 }
-```
+{% endhighlight %}
 
 and ran it with `go run sample.go`:
 
-```
+{% highlight bash %}
 The answer is 42
-```
+{% endhighlight %}
 
 See the result?
 
@@ -301,7 +310,7 @@ With [Tensorflow 1.2.0](https://github.com/tensorflow/tensorflow/releases/tag/v1
 
 To work around this problem, I edited `tensorflow/workspace.bzl` from:
 
-```
+{% highlight bash %}
 native.new_http_archive(
 	name = "eigen_archive",
 	urls = [
@@ -312,11 +321,11 @@ native.new_http_archive(
 	strip_prefix = "eigen-eigen-f3a22f35b044",
 	build_file = str(Label("//third_party:eigen.BUILD")),
 )
-```
+{% endhighlight %}
 
 to:
 
-```
+{% highlight bash %}
 native.new_http_archive(
 	name = "eigen_archive",
 	urls = [
@@ -327,7 +336,7 @@ native.new_http_archive(
 	strip_prefix = "eigen-eigen-d781c1de9834",
 	build_file = str(Label("//third_party:eigen.BUILD")),
 )
-```
+{% endhighlight %}
 
 then I could build it without further problems.
 
