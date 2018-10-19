@@ -589,7 +589,7 @@ then it will connect to the NATS server which is already configured on `myhostna
 
 # Resulting Network Topology
 
-// TODO - Add an image here
+![stan_network_topology](https://user-images.githubusercontent.com/185988/47211634-f44ac800-d3d0-11e8-8c00-999d9f88c03c.png)
 
 # Monitor
 
