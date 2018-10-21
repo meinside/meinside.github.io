@@ -19,7 +19,7 @@ and found out that NATS and/or NATS Streaming server(a.k.a. STAN) would be a goo
 Unlike Kafka, NATS and STAN are:
 
 * not dependent on JVM
-* not dependent [ZooKeeper](https://zookeeper.apache.org/)
+* not dependent on [ZooKeeper](https://zookeeper.apache.org/)
 * and quite light-weight, even run on Raspberry Pis!
 
 They are not that famous as Kafka yet,
@@ -706,7 +706,7 @@ WantedBy=multi-user.target
 
 # Test with a client
 
-Create a sample client with [this](https://github.com/meinside/stan-client-go/tree/master/example/pingpong):
+Create a sample client from [this code](https://github.com/meinside/stan-client-go/tree/master/example/pingpong):
 
 {% highlight go %}
 // main.go
