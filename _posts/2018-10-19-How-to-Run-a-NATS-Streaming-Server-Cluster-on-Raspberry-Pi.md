@@ -9,7 +9,7 @@ tags:
 - message queue
 - kafka
 - zookeeper
-published: false
+published: true
 ---
 
 I've been searching for alternatives to [Kafka](https://kafka.apache.org/) for some time,
@@ -526,7 +526,7 @@ streaming: {
 	store: "file"
 	dir: "/home/pi/stan/datastore"
 
-	nats_server_url: "nats://USER:PASSWORD@myhostname.com:60100"
+	nats_server_url: "nats://USER:PASSWORD@myhostname.com:60100, nats://USER:PASSWORD@myhostname.com:60200"
 
 	hb_interval: "10s"
 	hb_timeout: "10s"
@@ -730,7 +730,8 @@ const (
 	queueGroupUnique = "unique"
 	durableDefault   = "durable"
 
-	natsServerURL = "nats://myhostname.com:60100"
+	natsServerURL1 = "nats://myhostname.com:60100"
+	natsServerURL2 = "nats://myhostname.com:60200"
 
 	clientCertPath = "./certs/cert.pem"
 	clientKeyPath  = "./certs/key.pem"
@@ -769,7 +770,7 @@ func main() {
 	signal.Notify(interrupt, os.Interrupt)
 
 	sc = stanclient.Connect(
-		[]string{natsServerURL},
+		[]string{natsServerURL1, natsServerURL2},
 		stanclient.AuthOptionWithUsernameAndPassword(natsUsername, natsPassword),
 		stanclient.SecOptionWithCerts(clientCertPath, clientKeyPath, rootCaPath),
 		clusterID,
