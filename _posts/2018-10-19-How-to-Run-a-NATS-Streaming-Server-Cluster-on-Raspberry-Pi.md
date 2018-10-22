@@ -9,7 +9,7 @@ tags:
 - message queue
 - kafka
 - zookeeper
-published: true
+published: false
 ---
 
 I've been searching for alternatives to [Kafka](https://kafka.apache.org/) for some time,
