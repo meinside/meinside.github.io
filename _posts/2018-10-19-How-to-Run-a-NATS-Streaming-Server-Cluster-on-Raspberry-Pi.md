@@ -859,6 +859,8 @@ and run it with:
 $ go run main.go
 {% endhighlight %}
 
+Pings and pongs!
+
 Now we have a tiny, but clustered message queue system on Raspberry Pis!
 
 # Trouble Shooting
