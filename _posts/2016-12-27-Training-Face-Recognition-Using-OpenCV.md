@@ -19,7 +19,7 @@ and also how hard it is to train the computer to recognize something.
 
 I was learning OpenCV, and wanted to train something by my own hand.
 
-There were hundreds of selfie photos of myself taken by [this way](https://blog.meinside.pe.kr/Take-a-Selfie-on-Every-Wakeup-from-Sleep-OSX/),
+There were hundreds of selfie photos of myself taken by [this way](https://blog.meinside.dev/Take-a-Selfie-on-Every-Wakeup-from-Sleep-OSX/),
 
 ![my_faces](https://cloud.githubusercontent.com/assets/185988/21497844/f3d8689c-cc6a-11e6-8149-a0da02869170.png)
 
