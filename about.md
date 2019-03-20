@@ -16,6 +16,6 @@ permalink: /about/
 
 ## want to know more about me?
 
-* visit my [homepage](http://meinside.pe.kr)
+* visit my [homepage](https://meinside.dev)
 * or click social icons below.
 
