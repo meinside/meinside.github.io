@@ -5,6 +5,7 @@ tags:
 - raspberry pi
 - pushbullet
 - golang
+- ipstack
 published: true
 ---
 
@@ -29,7 +30,7 @@ Visit [pushbullet](https://www.pushbullet.com/#settings/account) and [ipstack](h
 
 ### A. Install pb-send
 
-**pb-send** is a small application that sends messages through pushbullet.
+[pb-send](https://github.com/meinside/pb-send) is a small application that sends messages through pushbullet.
 
 {% highlight bash %}
 $ go get -u github.com/meinside/pb-send
@@ -37,7 +38,7 @@ $ go get -u github.com/meinside/pb-send
 
 ### B. Install ip2loc
 
-**ip2loc** fetches geo locations of given ip addresses.
+[ip2loc](https://github.com/meinside/ipstack-go/tree/master/cmd/ip2loc) fetches geo locations of given ip addresses.
 
 {% highlight bash %}
 $ go get -u github.com/meinside/ipstack-go/cmd/ip2loc
@@ -78,7 +79,7 @@ $ pb-send "test message"
 {% endhighlight %}
 
 
-**NOTE**: fail2band and PAM is run by root privilege,
+**NOTE**: fail2ban and PAM is run by root privilege,
 
 so `pb-send.json` and `ip2loc.json` should also be placed in `/root/.config/`.
 
@@ -169,7 +170,7 @@ Create `notify-ssh-login.sh` file that will be run by PAM:
 
 {% gist 091376305f6577b142e1e55204f192c1 %}
 
-Again, edit **LOCATOR** and **SENDER** paths to yours, and make it executable:
+Again, edit **LOCATOR** and **SENDER** paths to yours, and make the file executable:
 
 {% highlight bash %}
 $ chmod +x /path/to/your/notify-ssh-login.sh
