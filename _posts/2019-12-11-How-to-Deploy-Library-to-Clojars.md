@@ -26,7 +26,7 @@ Generate a gpg key with a passphrase,
 $ gpg --gen-key
 {% endhighlight %}
 
-# 2. Deploy to Clojars
+## 2. Deploy to Clojars
 
 {% highlight bash %}
 $ lein deploy clojars
@@ -46,7 +46,7 @@ $ export GPG_TTY=$(tty)
 
 then run `lein deploy clojars` again.
 
-# 4. (optional) Create your .lein/credentials.clj.gpg file
+## 4. (optional) Create your .lein/credentials.clj.gpg file
 
 If you don't want to type your username and password everytime,
 
@@ -66,7 +66,7 @@ and fill it with:
 
 then convert it with:
 
-{% highlight clojure %}
+{% highlight bash %}
 $ gpg --default-recipient-self -e \
       ~/.lein/credentials.clj > ~/.lein/credentials.clj.gpg
 
