@@ -36,7 +36,11 @@ Then you'll be asked to enter your Clojars username, password, and gpg key's pas
 
 If nothing goes wrong, you library will be uploaded to Clojars.
 
-## 3. (optional) Set GPG_TTY environment variable
+----
+
+## Trouble Shooting
+
+### 1. GPG signing fails while deploying to Clojars
 
 If you suffer from this error: `gpg: signing failed: Inappropriate ioctl for device`,
 
@@ -46,7 +50,7 @@ $ export GPG_TTY=$(tty)
 
 then run `lein deploy clojars` again.
 
-## 4. (optional) Create your .lein/credentials.clj.gpg file
+### 2. Don't want to type username and password again and again
 
 If you don't want to type your username and password everytime,
 
@@ -75,4 +79,23 @@ $ rm ~/.lein/credentials.clj
 {% endhighlight %}
 
 Now `lein deploy clojars` will not ask your username and password.
+
+### 3. GPG decryption fails while deploying to Clojars
+
+If you see following kind of error:
+
+```
+gpg: decryption failed: No secret key
+Could not decrypt credentials from /Users/SomeUsername/.lein/credentials.clj.gpg
+gpg: decryption failed: No secret key
+```
+
+decrypt your gpg key once,
+
+```bash
+# You need to type your gpg key's passphrase
+$ gpg --decrypt ~/.lein/credentials.clj.gpg
+```
+
+then retry `lein deploy clojars`.
 
