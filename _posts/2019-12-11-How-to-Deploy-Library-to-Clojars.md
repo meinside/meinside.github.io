@@ -84,18 +84,18 @@ Now `lein deploy clojars` will not ask your username and password.
 
 If you see following kind of error:
 
-```
+{% highlight bash %}
 gpg: decryption failed: No secret key
 Could not decrypt credentials from /Users/SomeUsername/.lein/credentials.clj.gpg
 gpg: decryption failed: No secret key
-```
+{% endhighlight %}
 
 decrypt your gpg key once,
 
-```bash
+{% highlight bash %}
 # You need to type your gpg key's passphrase
 $ gpg --decrypt ~/.lein/credentials.clj.gpg
-```
+{% endhighlight %}
 
 then retry `lein deploy clojars`.
 
