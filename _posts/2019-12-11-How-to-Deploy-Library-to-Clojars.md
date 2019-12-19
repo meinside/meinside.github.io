@@ -99,3 +99,17 @@ $ gpg --decrypt ~/.lein/credentials.clj.gpg
 
 then retry `lein deploy clojars`.
 
+### 4. cljdoc complains about 'unknown-revision'
+
+When you see:
+
+```
+unknown-revision This issue may occur if you deployed to Clojars before pushing the Git commit the release was made at.
+```
+
+in your cljdoc page, [check if you included your scm information in the project file](https://github.com/cljdoc/cljdoc/blob/master/doc/userguide/faq.md#how-do-i-set-scm-info-for-my-project).
+
+If it is already set correctly, make sure you have checked-out the right branch when deploying to Clojars.
+
+It also can be due to the wrong git tag (eg. which is not pushed to the scm yet) included in the package.
+
