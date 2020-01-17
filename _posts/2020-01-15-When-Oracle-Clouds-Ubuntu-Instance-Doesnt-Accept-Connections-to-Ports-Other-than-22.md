@@ -83,7 +83,6 @@ I didn't want to take Oracle's default security policy down, so I just added fol
 -A INPUT -p tcp -m state --state NEW -m tcp --dport 443 -j ACCEPT
 -A INPUT -p tcp -m state --state NEW -m tcp --dport 3000 -j ACCEPT
 -A INPUT -p tcp -m state --state NEW -m tcp --dport 8080 -j ACCEPT
--A INPUT -p tcp -m state --state NEW -m tcp --dport 8080 -j ACCEPT
 -A INPUT -p tcp -m state --state NEW -m tcp --dport 8888 -j ACCEPT
 -A INPUT -p tcp -m state --state NEW -m tcp --dport 22022 -j ACCEPT
 -A INPUT -p udp -m state --state NEW -m udp --dport 60000:60100 -j ACCEPT
