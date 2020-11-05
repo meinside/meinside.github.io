@@ -26,13 +26,19 @@ Generate a gpg key with a passphrase,
 $ gpg --gen-key
 {% endhighlight %}
 
-## 2. Deploy to Clojars
+## 2. Generate your deploy token,
+
+Visit [this page](https://clojars.org/tokens/) and generate a deploy token.
+
+This deploy token will be used as your password.
+
+## 3. Deploy to Clojars
 
 {% highlight bash %}
 $ lein deploy clojars
 {% endhighlight %}
 
-Then you'll be asked to enter your Clojars username, password, and gpg key's passphrase.
+Then you'll be asked to enter your Clojars username, password (deploy token), and gpg key's passphrase.
 
 If nothing goes wrong, you library will be uploaded to Clojars.
 
