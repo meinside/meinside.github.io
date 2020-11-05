@@ -63,9 +63,9 @@ $ vi ~/.lein/credentials.clj
 and fill it with:
 
 {% highlight clojure %}
-{#"https://clojars.org/repo"
+{#"https://repo.clojars.org"
   {:username "your-clojars-username"
-   :password "your-clojars-password"}}
+   :password "your-clojars-deploy-token"}}
 {% endhighlight %}
 
 then convert it with:
@@ -77,6 +77,8 @@ $ gpg --default-recipient-self -e \
 # for security, delete the original .clj file:
 $ rm ~/.lein/credentials.clj 
 {% endhighlight %}
+
+Your deploy token can be generated from [here](https://clojars.org/tokens/).
 
 Now `lein deploy clojars` will not ask your username and password.
 
